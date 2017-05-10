@@ -1,0 +1,22 @@
+{
+  "name": "reklamatmpm",
+  "version": "1.0.0",
+  "description": "simple web site",
+  "main": "index.js",
+  "scripts": {
+    "test": "tst"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morozp/reklamatmpm.git"
+  },
+  "author": "petr.dev@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/morozp/reklamatmpm/issues"
+  },
+  "homepage": "https://github.com/morozp/reklamatmpm#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
