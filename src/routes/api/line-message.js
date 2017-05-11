@@ -42,10 +42,10 @@ router.get('/', (req, resp) => {
 	})
 	.post('/webhook', (req, res, next) => {
 		bodies.push(res.body)
-		resp.send(bodies)
+		res.send(bodies)
 	})
 	.get('/webhook', (req, res, next) => {
-		resp.send(bodies)
+		res.send(bodies)
 	});
 
 module.exports = router;
