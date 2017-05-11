@@ -41,7 +41,7 @@ router.get('/', (req, resp) => {
 		resp.send(messages.find((message) => message.id === parseInt(req.params.messageId, 0)))
 	})
 	.post('/webhook', (req, res, next) => {
-		bodies.push(res.body)
+		bodies.push(req.body)
 		res.send(bodies)
 	})
 	.get('/webhook', (req, res, next) => {
