@@ -43,6 +43,9 @@ router.get('/', (req, resp) => {
 	.post('/webhook', (req, res, next) => {
 		bodies.push(res.body)
 		resp.send(bodies)
+	})
+	.get('/webhook', (req, res, next) => {
+		resp.send(bodies)
 	});
 
 module.exports = router;
