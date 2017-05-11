@@ -9,9 +9,17 @@ const api = require('./routes/api');
 
 const app = express();
 // Set
+app.set('port', (process.env.PORT || 5000));
+// -- views engine --
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
+// -- end views engine --
+
 app.use(logger('dev'));
 app.use(bodyParser());
 app.use(serveStatic(path.join(__dirname, 'static')));
+
 
 /*app.use(function (req, res, next) {
 	res.status(404);
@@ -33,18 +41,18 @@ app.get('/ErrorExample', function (req, res, next) {
 
 */
 // Routing
-app.get('/', (req, resp) => {
-	resp.send('Hello World, I`m reklamatm pm');
+app.get('/', (req, res) => {
+	res.render('index', { name: 'Maxim' });
 });
 
-app.get('/test', (req, resp) => {
-	resp.send('Hello World, I`m reklamatm pm this url `test`');
+app.get('/test', (req, res) => {
+	res.send('Hello World, I`m reklamatm pm this url `test`');
 })
 
 app.use('/api', api);
 
-app.listen(5000, function () {
+app.listen(app.get('port'), function () {
 	console.log('Express server start');
-	console.log('Express server listening on port 5000');
+	console.log(`Express server listening on port ${app.get('port')}`);
 	console.log('...');
 });
