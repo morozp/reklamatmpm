@@ -2,6 +2,7 @@ const express = require('express');
 var router = express.Router();
 
 const messages = [];
+const bodies = [];
 router.use(function timeLog(req, resp, next) {
 	console.log('Api messages Time: ', Date.now());
 	next();
@@ -38,6 +39,10 @@ router.get('/', (req, resp) => {
 	}
 	).get('/:messageId', (req, resp) => {
 		resp.send(messages.find((message) => message.id === parseInt(req.params.messageId, 0)))
+	})
+	.post('/webhook', (req, res, next) => {
+		bodies.push(res.body)
+		resp.send(bodies)
 	});
 
 module.exports = router;
