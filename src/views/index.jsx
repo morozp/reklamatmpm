@@ -11,6 +11,8 @@ const messages = [
 class HelloMessage extends React.Component {
 	render() {
 		return (<div>
+
+		<script src='~/dist/bundle.index.js'/>
 			Hello {this.props.name}
 			<ul>
 				{messages.map((message) => (
