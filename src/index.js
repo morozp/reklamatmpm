@@ -57,7 +57,7 @@ app.use(bodyParser());
 
 
 
-/*app.use(function (err, req, res, next) {
+app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	//log.error('Internal error(%d): %s', res.statusCode, err.message);
 	res.send({ error: err.message });
@@ -66,7 +66,7 @@ app.use(bodyParser());
 
 app.get('/ErrorExample', function (req, res, next) {
 	next(new Error('Random error!'));
-});*/
+});
 
 
 // Routing
@@ -77,8 +77,11 @@ app.get('/', (req, res) => {
 app.use('/api', api);
 app.use('/ads', ads);
 
-app.listen(app.get('port'), function () {
-	console.log('Express server start');
-	console.log(`Express server listening on port ${app.get('port')}`);
-	console.log('...');
+
+
+app.listen(app.get('port'), '0.0.0.0', function onStart(err) {
+  if (err) {
+    console.log(err);
+  }
+  console.info('==> 🌎 Listening on port %s. Open up http://localhpst:%s/ in your browser.', app.get('port'), app.get('port'));
 });
