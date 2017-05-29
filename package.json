@@ -28,12 +28,12 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "serve-favicon": "^2.4.2",
-    "serve-static": "^1.12.2"
-  },
-  "devDependencies": {
+    "serve-static": "^1.12.2",
     "cross-env": "^5.0.0",
     "faker": "^4.1.0",
-    "webpack": "^2.6.0",
+    "webpack": "^2.6.0"
+  },
+  "devDependencies": {
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0"
   }
