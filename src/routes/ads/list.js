@@ -1,0 +1,15 @@
+const express = require('express');
+const advsService = require('../../services/advs').init();
+
+
+var router = express.Router();
+
+router.get('/', (req, res) => {
+    const advs = advsService.getAll();
+   
+    res.render('advs/list', {
+        advs,
+    })
+});
+
+module.exports = router;

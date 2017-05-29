@@ -27,5 +27,8 @@
     "react-dom": "^15.5.4",
     "serve-favicon": "^2.4.2",
     "serve-static": "^1.12.2"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0"
   }
 }

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const serveStatic = require('serve-static')
 
 const api = require('./routes/api');
-
+const ads = require('./routes/ads');
 
 const app = express();
 // Set
@@ -50,6 +50,7 @@ app.get('/test', (req, res) => {
 })
 
 app.use('/api', api);
+app.use('/ads', ads);
 
 app.listen(app.get('port'), function () {
 	console.log('Express server start');
