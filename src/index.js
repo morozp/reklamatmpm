@@ -27,6 +27,7 @@ if (isDevelopment) {
         publicPath: config.output.publicPath
     }));
 
+    
     app.use(webpackHotMiddleware(compiler));
 }
 else {
