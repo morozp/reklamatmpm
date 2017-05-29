@@ -6,7 +6,7 @@
   "scripts": {
     "test": "test",
     "start": "supervisor src/index.js",
-    "build": "cross-env NODE_ENV=production node src/index.js",
+    "start:production": "cross-env NODE_ENV=production node src/index.js",
     "build:client": "webpack -p --config src/webpack.prod.config.js --progress"
   },
   "repository": {
