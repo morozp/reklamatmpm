@@ -5,22 +5,22 @@ const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const webpack = require('webpack');
 
-const webpackDevMiddleware = require( 'webpack-dev-middleware');  
-const webpackHotMiddleware = require('webpack-hot-middleware');  
-const config  = require('./webpack.dev.config.js');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.dev.config.js');
 
 const api = require('./routes/api');
 const ads = require('./routes/ads');
 
 const app = express();
-const DIST_DIR      = path.join(__dirname, "dist"),
-      HTML_FILE     = path.join(DIST_DIR, "index.html"),
-      isDevelopment = process.env.NODE_ENV !== "production",
-      DEFAULT_PORT  = 5000,
-      compiler      = webpack(config);
+const DIST_DIR = path.join(__dirname, "dist"),
+    HTML_FILE = path.join(DIST_DIR, "index.html"),
+    isDevelopment = process.env.NODE_ENV !== "production",
+    DEFAULT_PORT = 5000,
+    compiler = webpack(config);
 // Set
 app.set('port', (process.env.PORT || DEFAULT_PORT));
-if(isDevelopment){		  
+if (isDevelopment) {
     console.log('development');
 
     app.use(webpackDevMiddleware(compiler, {
@@ -28,22 +28,9 @@ if(isDevelopment){
     }));
 
     app.use(webpackHotMiddleware(compiler));
-
-    /*app.get("*", (req, res, next) => {
-        compiler.outputFileSystem.readFile(HTML_FILE, (err, result) => {
-            if (err) {
-                return next(err);
-            }
-            res.set('content-type', 'text/html');
-            res.send(result);
-            res.end();
-        });
-    });*/
 }
-else{
-	app.use(express.static(DIST_DIR));
-
-    app.get("*", (req, res) => res.sendFile(HTML_FILE));
+else {
+    app.use(express.static(DIST_DIR));
 }
 
 // -- views engine --
@@ -55,23 +42,21 @@ app.engine('jsx', require('express-react-views').createEngine());
 app.use(logger('dev'));
 app.use(bodyParser());
 
-
-
 app.use(function (err, req, res, next) {
-	res.status(err.status || 500);
-	//log.error('Internal error(%d): %s', res.statusCode, err.message);
-	res.send({ error: err.message });
-	return;
+    res.status(err.status || 500);
+    //log.error('Internal error(%d): %s', res.statusCode, err.message);
+    res.send({ error: err.message });
+    return;
 });
 
 app.get('/ErrorExample', function (req, res, next) {
-	next(new Error('Random error!'));
+    next(new Error('Random error!'));
 });
 
 
 // Routing
 app.get('/', (req, res) => {
-	res.render('index', { name: 'Maxim' });
+    res.render('index', { name: 'Maxim' });
 });
 
 app.use('/api', api);
@@ -80,8 +65,8 @@ app.use('/ads', ads);
 
 
 app.listen(app.get('port'), '0.0.0.0', function onStart(err) {
-  if (err) {
-    console.log(err);
-  }
-  console.info('==> 🌎 Listening on port %s. Open up http://localhpst:%s/ in your browser.', app.get('port'), app.get('port'));
+    if (err) {
+        console.log(err);
+    }
+    console.info('==> 🌎 Listening on port %s. Open up http://localhpst:%s/ in your browser.', app.get('port'), app.get('port'));
 });

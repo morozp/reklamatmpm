@@ -2,8 +2,7 @@ const webpack = require("webpack");
 const path = require('path');
 
 
-const config = { 
-  
+const config = {   
   entry: './src/client/index.js',
   output: {
     filename: 'bundle.index.js',
