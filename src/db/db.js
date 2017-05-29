@@ -61,5 +61,5 @@ const db = {
     advs,
 }
 
-console.log(db);
+
 module.exports = db;
