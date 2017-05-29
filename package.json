@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": " supervisor src/index.js"
+    "start": "supervisor src/index.js",
+    "build": "cross-env NODE_ENV=production node src/index.js",
+    "build:client": "webpack -p --config src/webpack.prod.config.js --progress"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,10 @@
     "serve-static": "^1.12.2"
   },
   "devDependencies": {
-    "faker": "^4.1.0"
+    "cross-env": "^5.0.0",
+    "faker": "^4.1.0",
+    "webpack": "^2.6.0",
+    "webpack-dev-middleware": "^1.10.2",
+    "webpack-hot-middleware": "^2.18.0"
   }
 }
