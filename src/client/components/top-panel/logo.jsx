@@ -1,7 +1,6 @@
-const react  = require('react');
-import react from 'react';
-import {Link} from 'react-router';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default ()=>(
-    <div/>
+export default () => (
+	<Link className='navbar-brand' to='/'>Reklama.tm</Link>
 )
