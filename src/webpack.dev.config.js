@@ -3,13 +3,13 @@ const baseConfig = require('./webpack.base.config');
 
 baseConfig.devtool ='source-map',
 
-baseConfig.plugins = [  
+baseConfig.plugins.push (
     new webpack.DefinePlugin({
         "process.env": {
-            "NODE_ENV": JSON.stringify("production")
+            "NODE_ENV": JSON.stringify("development")
         }
     })
-];
+);
 
 
 module.exports = baseConfig;

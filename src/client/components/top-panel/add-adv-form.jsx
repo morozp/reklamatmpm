@@ -11,7 +11,7 @@ const AddBtn = () => {
 
 
 export default () => (
-	<form class="navbar-form navbar-center">
+	<form className="navbar-form navbar-center">
 		<AddBtn />
 	</form>
 )

@@ -11,13 +11,13 @@ import MobileMenuBtn from './mobile-menu-btn';
 export default () => {
 	return (
 		<nav className='navbar navbar-default navbar-fixed-top'>
-			<div class="container-fluid">
-				<div class="navbar-header">
+			<div className="container-fluid">
+				<div className="navbar-header">
 					<MobileMenuBtn />
 					<Logo />
 				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
+				<div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul className="nav navbar-nav">
 						<li><LineLink /></li>
 						<li><VkLin /></li>
 					</ul>

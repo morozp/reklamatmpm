@@ -1,8 +1,9 @@
 import React from 'react';
 
-export default () => (<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	<span class="sr-only">Toggle navigation</span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
-	<span class="icon-bar"></span>
+export default () => (
+<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	<span className="sr-only">Toggle navigation</span>
+	<span className="icon-bar"></span>
+	<span className="icon-bar"></span>
+	<span className="icon-bar"></span>
 </button>)

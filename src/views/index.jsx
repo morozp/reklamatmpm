@@ -3,6 +3,7 @@ class HelloMessage extends React.Component {
 	render() {
 		return (
 			<body>
+				 <link rel="stylesheet" href="/index.css" />
 				<div
 					className='app-container'
 					id='app-container'
@@ -18,6 +19,8 @@ class HelloMessage extends React.Component {
 				))}
 			</ul>*/}
 				</div>
+				<script src='/bundle.common.js' />
+				<script src='/bundle.vendor.js' />
 				<script src='/bundle.index.js' />
 			</body>);
 	}

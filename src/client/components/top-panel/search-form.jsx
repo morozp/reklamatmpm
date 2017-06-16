@@ -2,10 +2,10 @@ import React from 'react';
 const searchInput = () => (
 	<input type='text' class='form-control' placeholder='Например, iPhone 7' />
 );
-const searchBtn = () => (<button type='submit' class='btn btn-default'>Найти</button>);
+const searchBtn = () => (<button type='submit' className='btn btn-default'>Найти</button>);
 export default () => (
-	<form class='navbar-form navbar-left' role='search'>
-		<div class='form-group'>
+	<form className='navbar-form navbar-left' role='search'>
+		<div className='form-group'>
 			<searchInput />
 		</div>
 		<searchBtn />
