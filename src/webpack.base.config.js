@@ -12,7 +12,7 @@ const config = {
 		path: path.resolve(__dirname, 'dist'),
 	},
 	plugins: [
-		new webpack.EnvironmentPlugin(['NODE_ENV']),
+		//new webpack.EnvironmentPlugin(['NODE_ENV']),
 		new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'bundle.common.js' }),
 		new ExtractTextPlugin("[name].css"),
 
