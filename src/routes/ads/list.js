@@ -6,10 +6,10 @@ var router = express.Router();
 
 router.get('/', (req, res) => {
     const advs = advsService.getAll();
-   
-    res.render('advs/list', {
+    res.json(advs);
+    /*res.render('advs/list', {
         advs,
-    })
+    })*/
 });
 
 module.exports = router;
