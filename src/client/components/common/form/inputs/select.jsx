@@ -1,9 +1,11 @@
 import React from 'react';
 
 export const NamedHandledSelect = (props) => {
-	var { handleChangeByName, value, name, nameValueOptions } = props;
+	var { handleChangeByName, value, name, nameValueOptions, className,id } = props;
 	return (
-		<select
+		<select 
+			id={id}
+			className={className}
 			value={value}
 			onChange={handleChangeByName}
 			name={name}

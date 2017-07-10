@@ -6,7 +6,9 @@ import {
 import TopPanel from './top-panel';
 import Footer from './footer';
 
-import {AddItemForm} from './adv/add-item';
+
+import { AddItemForm } from './adv/add-item';
+import { AdvWrapper } from './common/adv-wrapper';
 
 
 class App extends React.Component {
@@ -15,8 +17,10 @@ class App extends React.Component {
 			<Router>
 				<div>
 					<TopPanel />
-					<div className='page-content' style={{marginTop:80}}>
-						<AddItemForm/>
+					<div className='page-content' style={{ padding:50,marginTop:80 }}>
+						<AdvWrapper>
+							<AddItemForm/>
+						</AdvWrapper>
 					</div>
 					<Footer />
 				</div>

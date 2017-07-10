@@ -1,6 +1,6 @@
-import {NamedHandledInput} from './input';
-import {NamedHandledTextArea} from './textarea';
-import {NamedHandledSelect} from './select';
+import { NamedHandledInput } from './input';
+import { NamedHandledTextArea } from './textarea';
+import { NamedHandledSelect } from './select';
 
 export {
 	NamedHandledInput,

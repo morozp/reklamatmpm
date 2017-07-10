@@ -1,5 +1,5 @@
 
-class AdvService {
+class advService {
     static preUrl = '/ads';
     static getAll() {
         return fetch(AdvService.preUrl, { method: 'get', cache: 'no-cache' }).then((response) => {
@@ -50,3 +50,5 @@ class AdvService {
         });
     }
 }
+
+export default advService;
