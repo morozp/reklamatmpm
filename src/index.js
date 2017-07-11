@@ -27,7 +27,6 @@ if (isDevelopment) {
         publicPath: config.output.publicPath
     }));
 
-    
     app.use(webpackHotMiddleware(compiler));
 }
 else {
@@ -60,8 +59,8 @@ app.use('/api', api);
 app.use('/ads', ads);
 
 // Routing
-app.get('/', (req, res) => {
-    res.render('index', { name: 'Maxim' });
+app.get('*', (req, res) => {
+    res.render('index', { name: 'reklama.tm' });
 });
 
 

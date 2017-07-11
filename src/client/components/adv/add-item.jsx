@@ -10,8 +10,16 @@ import {
 	Label
 } from './../common/label';
 import {
+	Pending
+} from './../common/pending';
+import {
 	ValidationError
 } from './../common/form/validation-line';
+import { 
+	addNewItem,
+	deleteItem,
+} from '../../controllers/adv-item';
+
 
 
 const servicesOptions = [
@@ -82,6 +90,7 @@ export class AddItemForm extends React.Component {
 			images: [],
 			description: "",
 			validationErrors: {},
+			isPending: false,
 		};
 
 		this.handleChangeByName = this.handleChangeByName.bind(this);
@@ -101,19 +110,24 @@ export class AddItemForm extends React.Component {
 					this.validate()
 				}
 			);
-			debugger;
 		}
-		
+
 		this.validate();
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
-		var errors = this.validate();
-
-		if (!errors) {
-			console.log('Добавляем...');
-		}
+		this.validate()
+		.then(() => {
+			if (this.isValid()) {
+				this.setState({ isPending: true })
+				addNewItem(this.state)
+				.then((result) =>{
+					this.setState({ isPending: false });
+				})
+				
+			}
+		});
 	}
 
 	handleDelete(event) {
@@ -132,12 +146,16 @@ export class AddItemForm extends React.Component {
 		if (!state.description) {
 			errors.description = 'Пожалуйста напишите текст объявления';
 		} else if (state.description.length < minDescriptionCount) {
-			errors.description = `Текст объявления должен быть не менее ${minDescriptionCount} сиволов`;
+			errors.description = `Текст объявления должен быть не менее ${minDescriptionCount} символов`;
 		}
 
-		this.setState({ validationErrors: errors });
-
-		return errors;
+		return new Promise(
+			(resolve) => {
+				this.setState({ validationErrors: errors }, () => {
+					resolve();
+				});
+			}
+		);
 	}
 
 	isValid() {
@@ -158,8 +176,9 @@ export class AddItemForm extends React.Component {
 
 		return (
 			<form>
+				<Pending isPending={this.state.isPending}>
+				</Pending>
 				<div className='adv-add-item form-group'>
-
 					<div className='place form-group' >
 						<label htmlFor='place'>Местоположение:</label>
 						<NamedHandledSelect
@@ -201,7 +220,7 @@ export class AddItemForm extends React.Component {
 								className='btn-block btn btn-primary'
 							>
 								Загрузить фото
-							</button>
+								</button>
 						</div>
 						<div className='uploaded-images'>
 							<image src='#'
@@ -214,7 +233,7 @@ export class AddItemForm extends React.Component {
 					<div className='price form-group'>
 						<label htmlFor='price'>
 							Цена
-						</label>
+							</label>
 						<input
 							id='price'
 							className='form-control'
@@ -242,7 +261,7 @@ export class AddItemForm extends React.Component {
 							className='btn btn-default btn-lg btn-block'
 						>
 							Удалить
-						</button>
+							</button>
 						<button
 							disabled={!isValid}
 							className='btn btn-default btn-lg btn-block'
@@ -252,10 +271,9 @@ export class AddItemForm extends React.Component {
 							className='btn btn-primary btn-lg btn-block'
 							type='submit'
 							onClick={this.handleSubmit}>Опубликовать</button>
-						<span>{isValid.toString()}</span>
 					</div>
-
 				</div>
+
 			</form>
 		);
 	}
