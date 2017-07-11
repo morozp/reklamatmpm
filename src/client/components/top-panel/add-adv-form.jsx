@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const AddBtn = () => {
 	return (
-		<Link to={'#'} className='btn default'>
+		<Link to={'/new'} className='btn default'>
 			Добавить объявление
 		</Link>
 	);

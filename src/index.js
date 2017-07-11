@@ -27,7 +27,6 @@ if (isDevelopment) {
         publicPath: config.output.publicPath
     }));
 
-    
     app.use(webpackHotMiddleware(compiler));
 }
 else {
@@ -44,25 +43,25 @@ app.engine('jsx', require('express-react-views').createEngine());
 app.use(logger('dev'));
 app.use(bodyParser());
 
-app.use(function (err, req, res, next) {
+/*app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     //log.error('Internal error(%d): %s', res.statusCode, err.message);
     res.send({ error: err.message });
     return;
-});
+});*/
 
 app.get('/ErrorExample', function (req, res, next) {
     next(new Error('Random error!'));
 });
 
 
-// Routing
-app.get('/', (req, res) => {
-    res.render('index', { name: 'Maxim' });
-});
-
 app.use('/api', api);
 app.use('/ads', ads);
+
+// Routing
+app.get('*', (req, res) => {
+    res.render('index', { name: 'reklama.tm' });
+});
 
 
 
