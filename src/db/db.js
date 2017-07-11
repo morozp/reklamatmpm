@@ -18,7 +18,6 @@ const generateUsers = () => {
 };
 
 const generateAdvs = (categories) => {
-
     const arr = [];
     const length = faker.random.arrayElement([31, 56, 21, 10, 44]);
     for (let i = 0; i < length; i++) {
