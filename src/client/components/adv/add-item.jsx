@@ -5,7 +5,7 @@ import {
 	NamedHandledSelect,
 	NamedHandledTextArea,
 } from './../common/form/inputs';
-
+import {AdvWrapper} from './../common/adv-wrapper';
 import {
 	Label
 } from './../common/label';
@@ -19,8 +19,6 @@ import {
 	addNewItem,
 	deleteItem,
 } from '../../controllers/adv-item';
-
-
 
 const servicesOptions = [
 	{ value: 'sale', name: 'Продам' },
@@ -175,6 +173,7 @@ export class AddItemForm extends React.Component {
 		const isValid = this.isValid();
 
 		return (
+			
 			<form>
 				<Pending isPending={this.state.isPending}>
 				</Pending>

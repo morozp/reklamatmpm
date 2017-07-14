@@ -9,6 +9,7 @@ const ads = require('./routes/ads');
 
 const app = express();
 const DIST_DIR = path.join(__dirname, "dist"),
+    CONTENT_DIR = path.join(__dirname, "content"),
     HTML_FILE = path.join(DIST_DIR, "index.html"),
     isDevelopment = process.env.NODE_ENV !== "production",
     DEFAULT_PORT = 5000 ;
@@ -22,6 +23,7 @@ if (isDevelopment) {
     const webpackHotMiddleware = require('webpack-hot-middleware');
     const compiler = webpack(config);
     console.log('development');
+    
 
     app.use(webpackDevMiddleware(compiler, {
         publicPath: config.output.publicPath
@@ -30,9 +32,10 @@ if (isDevelopment) {
     app.use(webpackHotMiddleware(compiler));
 }
 else {
-    console.log('production');
     app.use(express.static(DIST_DIR));
 }
+
+app.use(express.static(CONTENT_DIR));
 
 // -- views engine --
 app.set('views', __dirname + '/views');
