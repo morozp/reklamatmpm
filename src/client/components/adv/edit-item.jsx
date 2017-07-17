@@ -6,26 +6,26 @@ import {
 	NamedHandledTextArea,
 	NamedHandledInput,
 } from '../common/form/inputs';
+import { form } from '../common/form/form';
 
-export class EditItem extends React.PureComponent {
+
+
+class EditItemWrapped extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		this.state = {
-			isPending: false,
-			price:0,
-			description:'',
-		}
-	}
-
-	handleChangeByName(){
-
 	}
 
 	render() {
 		const isValid = true;
+		const formProps =  this.props.form || {};
+		const formState = formProps.state || {};
+		const {
+			handleChangeByName
+		} = formProps;
+
 		return (
-			<form>
-				<Pending isPending={this.state.isPending} />
+			
+				
 				<div className='adv-edit-item form-group'>
 					<div className='images form-group'>
 						<ImageUploader />
@@ -38,8 +38,8 @@ export class EditItem extends React.PureComponent {
 						<input
 							id='price'
 							className='form-control'
-							value={this.state.price}
-							onChange={this.handleChangeByName}
+							value={formState.price}
+							onChange={handleChangeByName}
 							name='price'
 						/>
 						{/*<ValidationError error={validationErrors.price} />*/}
@@ -49,27 +49,22 @@ export class EditItem extends React.PureComponent {
 						<NamedHandledTextArea
 							id='description'
 							className='form-control text-muted'
-							value={this.state.description}
-							handleChangeByName={this.handleChangeByName}
+							value={formState.description}
+							handleChangeByName={handleChangeByName}
 							name='description'
 							placeholder='Напишите текст объявления...'
 						/>
 						{/*<ValidationError error={validationErrors.description} />*/}
 					</div>
-
-					<div className='controls'>
-						<button
-							className='btn btn-default btn-lg btn-block'
-						>
-							Удалить
-							</button>
-						<button
-							disabled={!isValid}
-							className='btn btn-default btn-lg btn-block'
-							type='submit'>Сохранить изменения</button>
-					</div>
 				</div>
-			</form>
 		)
 	}
 }
+
+export const EditItem = form(EditItemWrapped, (form) => {
+	return {
+		isPending: false,
+		price: 0,
+		description: '',
+	};
+})
