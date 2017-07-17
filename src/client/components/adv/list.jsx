@@ -1,5 +1,7 @@
 import React from 'react';
+import {Route, Switch} from 'react-router-dom';
 import AdvItem from './item';
+import {EditItem} from './edit-item';
 import {AdvWrapper} from '../common/adv-wrapper';
 
 const advList = [
@@ -86,7 +88,16 @@ class AdvList extends React.PureComponent {
 					advList.map(
 						(advItem) => (
 							<AdvWrapper key={advItem.id}>
-								<AdvItem {...advItem} />
+								<Switch>
+								<Route
+									path={`/edit/${advItem.id}`}
+									render={()=>(<EditItem {...advItem}/>)}
+								/>
+								<Route
+									path={`/`}
+									render={()=>(<AdvItem {...advItem} />)}>
+								</Route>
+								</Switch>
 							</AdvWrapper>
 						)
 					)

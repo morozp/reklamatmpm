@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link , Route } from 'react-router-dom';
 
 const vkLink = 'https://vk.com/reklamatm';
 const line = 'https://line.me/R/ti/p/%40reklama.tm';
@@ -74,10 +74,12 @@ const AdvItem = (props) => {
 		publishDate = '',
 		viewsCount = 0,
 		isEditable = false,
+		match = {},
 	} = props;
 
 	return (
 		<div className='adv-item'>
+
 			<div className='images'>
 				{images.map(
 					(imgId) => (
@@ -110,7 +112,7 @@ const AdvItem = (props) => {
 
 			<div className='controls'>
 				<div className='btn-group btn-group-justified'>
-					{isEditable && (<Link to='#' className='btn btn-info'>Edit</Link>)}
+					{isEditable && (<Link to={`/edit/${id}`} className='btn btn-info'>Edit</Link>)}
 					<a href={vkLink} className='btn btn-primary'>Vkontakte</a>
 					<a href={line} className='btn btn-success'>Line it</a>
 				</div>

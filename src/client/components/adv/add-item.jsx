@@ -5,7 +5,7 @@ import {
 	NamedHandledSelect,
 	NamedHandledTextArea,
 } from './../common/form/inputs';
-import {AdvWrapper} from './../common/adv-wrapper';
+import { AdvWrapper } from './../common/adv-wrapper';
 import {
 	Label
 } from './../common/label';
@@ -15,10 +15,13 @@ import {
 import {
 	ValidationError
 } from './../common/form/validation-line';
-import { 
+import {
 	addNewItem,
 	deleteItem,
 } from '../../controllers/adv-item';
+import {
+	ImageUploader
+} from './image-uploader';
 
 const servicesOptions = [
 	{ value: 'sale', name: 'Продам' },
@@ -116,16 +119,16 @@ export class AddItemForm extends React.Component {
 	handleSubmit(event) {
 		event.preventDefault();
 		this.validate()
-		.then(() => {
-			if (this.isValid()) {
-				this.setState({ isPending: true })
-				addNewItem(this.state)
-				.then((result) =>{
-					this.setState({ isPending: false });
-				})
-				
-			}
-		});
+			.then(() => {
+				if (this.isValid()) {
+					this.setState({ isPending: true })
+					addNewItem(this.state)
+						.then((result) => {
+							this.setState({ isPending: false });
+						})
+
+				}
+			});
 	}
 
 	handleDelete(event) {
@@ -173,10 +176,9 @@ export class AddItemForm extends React.Component {
 		const isValid = this.isValid();
 
 		return (
-			
+
 			<form>
-				<Pending isPending={this.state.isPending}>
-				</Pending>
+				<Pending isPending={this.state.isPending} />
 				<div className='adv-add-item form-group'>
 					<div className='place form-group' >
 						<label htmlFor='place'>Местоположение:</label>
@@ -214,19 +216,7 @@ export class AddItemForm extends React.Component {
 					</div>
 
 					<div className='images form-group'>
-						<div className='upload-btn'>
-							<button
-								className='btn-block btn btn-primary'
-							>
-								Загрузить фото
-								</button>
-						</div>
-						<div className='uploaded-images'>
-							<image src='#'
-								width='100px'
-								height='100px'
-							/>
-						</div>
+						<ImageUploader/>
 					</div>
 
 					<div className='price form-group'>

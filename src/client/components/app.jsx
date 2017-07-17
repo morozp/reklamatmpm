@@ -13,7 +13,8 @@ class App extends React.Component {
 				<div>
 					<TopPanel />
 					<div className='page-content' style={{margin: '0 auto', padding:50,marginTop:80 ,maxWidth:610,minWidth:200}}>
-						<Route  path='/list' component={AdvList}/>
+						<Route exact path='/' component={AdvList}/>
+						<Route path='/edit' component={AdvList}/>
 						<Route path='/new' component={AddItemForm} />
 					</div>
 					<Footer />
