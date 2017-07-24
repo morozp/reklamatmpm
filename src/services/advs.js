@@ -1,19 +1,41 @@
-const db = require('../db/db');
-
+var mongoose = require('mongoose');
+const db = require('../db/models/index'); 
 class AdvService {
     constructor(db) {
         this.db = db;
     }
 
     getAll() {
-        return this.db.advs;
+        return db.Adv.find(
+            (err,res)=>{
+            console.log(err);
+        });
     }
     get(advId) {
-        return this.db.advs.find((adv) => adv.id === advId);
+        return db.Adv.find({_id:advId}, (err)=>{
+            console.log(err);
+        });
     }
     add(newAdv) {
-        const length = this.db.advs.push(newAdv);
-        return this.db.advs[length-1];
+        //todo
+        const adv = new db.Adv({
+            createDate: Date.now(),
+	        editDate: Date.now(),
+	        publishDate: null,
+	        isDeleted: false,
+	        isPublished : false,
+	        creatorId : null,
+	        publisherId : null,
+        })
+        
+        return adv.save((err, product , numAffected)=>{
+            if(err){
+                console.log(err)
+            }
+            else{
+                console.log(product);
+            }
+        });
     }
     update(adv) {
         let prevIndex = null;

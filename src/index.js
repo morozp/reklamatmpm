@@ -3,7 +3,9 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
-
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const api = require('./routes/api');
 const ads = require('./routes/ads');
 
@@ -14,6 +16,7 @@ const DIST_DIR = path.join(__dirname, "dist"),
     isDevelopment = process.env.NODE_ENV !== "production",
     DEFAULT_PORT = 5000 ;
 // Set
+require('./db/dbinit'); 
 console.log(process.env.NODE_ENV );
 app.set('port', (process.env.PORT || DEFAULT_PORT));
 if (isDevelopment) {
@@ -22,8 +25,7 @@ if (isDevelopment) {
     const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpackHotMiddleware = require('webpack-hot-middleware');
     const compiler = webpack(config);
-    console.log('development');
-    
+    console.log('development'); 
 
     app.use(webpackDevMiddleware(compiler, {
         publicPath: config.output.publicPath
@@ -35,6 +37,13 @@ else {
     app.use(express.static(DIST_DIR));
 }
 
+app.use(cookieParser())
+app.use(session({
+    secret: 'winner',
+    resave: false,
+    saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: require('mongoose').connection })
+}));
 app.use(express.static(CONTENT_DIR));
 
 // -- views engine --
@@ -45,19 +54,6 @@ app.engine('jsx', require('express-react-views').createEngine());
 
 app.use(logger('dev'));
 app.use(bodyParser());
-
-/*app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    //log.error('Internal error(%d): %s', res.statusCode, err.message);
-    res.send({ error: err.message });
-    return;
-});*/
-
-app.get('/ErrorExample', function (req, res, next) {
-    next(new Error('Random error!'));
-});
-
-
 app.use('/api', api);
 app.use('/ads', ads);
 
@@ -65,9 +61,7 @@ app.use('/ads', ads);
 app.get('*', (req, res) => {
     res.render('index', { name: 'reklama.tm' });
 });
-
-
-
+app.use(require('./routes/error-handler'));
 app.listen(app.get('port'), '0.0.0.0', function onStart(err) {
     if (err) {
         console.log(err);
