@@ -3,8 +3,7 @@ const list = require('./list');
 const details = require('./details');
 var router = express.Router();
 
-router.use(list);
-
-router.use(details);
+router.use('/ads' , list);
+router.use('/ads' , details);
 
 module.exports = router;

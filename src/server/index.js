@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const api = require('./routes/api');
-const ads = require('./routes/ads');
+
 
 const app = express();
 const DIST_DIR = path.join(__dirname, "dist"),
@@ -20,7 +20,7 @@ require('./db/dbinit');
 console.log(process.env.NODE_ENV );
 app.set('port', (process.env.PORT || DEFAULT_PORT));
 if (isDevelopment) {
-    const config = require('./webpack.dev.config.js');
+    const config = require('../webpack.dev.config');
     const webpack = require('webpack');
     const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -54,8 +54,8 @@ app.engine('jsx', require('express-react-views').createEngine());
 
 app.use(logger('dev'));
 app.use(bodyParser());
-app.use('/api', api);
-app.use('/ads', ads);
+app.use(api);
+
 
 // Routing
 app.get('*', (req, res) => {

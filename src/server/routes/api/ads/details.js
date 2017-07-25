@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const advService = require('../../services/advs').init();
+const advService = require('../../../services/advs').init();
 
 router.route('/:itemId')
     .get((req, resp) => {
@@ -7,7 +7,7 @@ router.route('/:itemId')
         const adv = advService
         .get(itemId)
         .then((answer)=>{
-            resp.json(adve);
+            resp.json(answer.map(x=>x.toJSON()));
         }).catch(()=>{
             // todo
             resp.end()
@@ -21,7 +21,7 @@ router.route('/:itemId')
        advService
         .add(req)
         .then((answer)=>{
-            resp.json(adv);
+            resp.json(adv && adv[0] && adv[0].toJSON()|| null);
         }).catch(()=>{
             // todo
             resp.end()

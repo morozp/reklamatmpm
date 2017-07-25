@@ -9,7 +9,7 @@ const config = {
 	},
 	output: {
 		filename: 'bundle.[name].js',
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'server/dist'),
 	},
 	plugins: [
 		//new webpack.EnvironmentPlugin(['NODE_ENV']),
