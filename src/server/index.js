@@ -15,8 +15,11 @@ const DIST_DIR = path.join(__dirname, "dist"),
     HTML_FILE = path.join(DIST_DIR, "index.html"),
     isDevelopment = process.env.NODE_ENV !== "production",
     DEFAULT_PORT = 5000 ;
-// Set
-require('./db/dbinit'); 
+
+// init data bases
+require('./db/db-init'); 
+require('./db/db-file-storage-init'); 
+
 console.log(process.env.NODE_ENV );
 app.set('port', (process.env.PORT || DEFAULT_PORT));
 if (isDevelopment) {

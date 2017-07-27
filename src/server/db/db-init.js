@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://reklamatmpm:reklamatmpm123@ds117093.mlab.com:17093/reklamatmpm',{
+mongoose.connect('mongodb://reklamatmpm:reklamatmpm@ds117093.mlab.com:17093/reklamatmpm',{
     server:{
         poolSize: 10,
     }
