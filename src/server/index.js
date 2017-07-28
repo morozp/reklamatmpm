@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const fileUploader = require('express-fileupload');
 const MongoStore = require('connect-mongo')(session);
 const api = require('./routes/api');
 
@@ -40,6 +41,7 @@ else {
     app.use(express.static(DIST_DIR));
 }
 
+
 app.use(cookieParser())
 app.use(session({
     secret: 'winner',
@@ -48,6 +50,7 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: require('mongoose').connection })
 }));
 app.use(express.static(CONTENT_DIR));
+app.use(fileUploader());
 
 // -- views engine --
 app.set('views', __dirname + '/views');
