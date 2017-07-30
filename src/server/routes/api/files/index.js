@@ -1,7 +1,11 @@
 const express = require('express');
+const dbMiddleware = require('../../../db/db-middleware');
+const fileStoreConnection = require('../../../db/connection-init').fileStorage;
 const router = express.Router();
 const imageService  = require('../../../services/image').init();
-router.route('/image')
+
+router.use('/image',dbMiddleware(fileStoreConnection));
+router.route('/image')	
 	.post( (req , resp)=>{
 		console.log('image/post')
 		if (!req.files){
@@ -10,7 +14,7 @@ router.route('/image')
 		}
 
 		imageService.uploadImage(req.files.uploadImage.data ,req.files.uploadImage.mimetype).then((res)=>{
-			resp.send(res.toJSON());
+			resp.send(res);
 		}).catch((err)=>{
 			resp.send(err.toString());
 		});

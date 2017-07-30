@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const connection = require('../connection-init').default;
+
 const {
 	categories,
 	regions,
@@ -28,4 +30,4 @@ const advSchema = mongoose.Schema({
 	}
 });
 
-module.exports = mongoose.model('Adv', advSchema);
+module.exports = connection.model('Adv', advSchema);

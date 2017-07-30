@@ -18,8 +18,8 @@ const DIST_DIR = path.join(__dirname, "dist"),
     DEFAULT_PORT = 5000 ;
 
 // init data bases
-require('./db/db-init'); 
-require('./db/db-file-storage-init'); 
+//require('./db/db-init'); 
+//require('./db/db-file-storage-init'); 
 
 console.log(process.env.NODE_ENV );
 app.set('port', (process.env.PORT || DEFAULT_PORT));
@@ -42,12 +42,15 @@ else {
 }
 
 
+const connection = require('./db/connection-init').default;
 app.use(cookieParser())
 app.use(session({
     secret: 'winner',
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: require('mongoose').connection })
+    store: new MongoStore({ 
+        mongooseConnection: connection,
+    })
 }));
 app.use(express.static(CONTENT_DIR));
 app.use(fileUploader());
