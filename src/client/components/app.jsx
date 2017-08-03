@@ -2,14 +2,10 @@ import React from 'react';
 import {	
 	Route,
 } from 'react-router-dom'
-
 import TopPanel from './top-panel';
 import Footer from './footer';
-
-
 import { AddItemForm } from './adv/add-item';
-import { AdvWrapper } from './common/adv-wrapper';
-
+import { AdvList } from './adv/list';
 
 class App extends React.Component {
 	render() {
@@ -17,11 +13,9 @@ class App extends React.Component {
 				<div>
 					<TopPanel />
 					<div className='page-content' style={{margin: '0 auto', padding:50,marginTop:80 ,maxWidth:610,minWidth:200}}>
-						<Route path='/new' component={AddItemForm}>
-							{/*(<AdvWrapper>
-								<AddItemForm/>
-							</AdvWrapper>)*/}
-						</Route>
+						<Route exact path='/' component={AdvList}/>
+						<Route path='/edit' component={AdvList}/>
+						<Route path='/new' component={AddItemForm} />
 					</div>
 					<Footer />
 				</div>

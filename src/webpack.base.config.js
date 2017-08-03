@@ -9,7 +9,7 @@ const config = {
 	},
 	output: {
 		filename: 'bundle.[name].js',
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'server/dist'),
 	},
 	plugins: [
 		//new webpack.EnvironmentPlugin(['NODE_ENV']),
@@ -38,7 +38,7 @@ const config = {
 				}
 			},
 			{
-				test: /\.less$/,
+				test: /\.(less|css)$/,
 				use: ExtractTextPlugin.extract({
 					fallback:'style-loader',
 					use:['css-loader', 'less-loader']

@@ -5,7 +5,7 @@ import Logo from './logo';
 import LineLink from './line-link-btn';
 import VkLin from './vk-link-btn';
 import SearchForm from './search-form';
-import AddAdvForm from './add-adv-form';
+import AddAdvBtn from './add-btn';
 import MobileMenuBtn from './mobile-menu-btn';
 
 export default () => {
@@ -22,7 +22,7 @@ export default () => {
 						<li><VkLin /></li>
 					</ul>
 					<SearchForm />
-					<AddAdvForm />
+					<AddAdvBtn />
 				</div>
 			</div>
 		</nav>

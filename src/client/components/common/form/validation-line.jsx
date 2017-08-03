@@ -2,7 +2,7 @@ import React from 'react';
 
 export const ValidationError = (props) => {
 	var { error } = props;
-	return (error && (<p className='vallidation-error'>{error}</p>)) || null;
+	return (error && (<p className='vallidation-error text-danger'>{error}</p>)) || null;
 };
 
 export const ValidationErrors = (props) => {
