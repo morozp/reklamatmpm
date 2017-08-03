@@ -37,7 +37,7 @@ const generateAdvs = (categories) => {
     return arr;
 };
 
-const generateCategoryies = () => {
+const generateCategories = () => {
     const arr = [];
     const length = faker.random.arrayElement([8, 11, 1]);
     for (let i = 0; i < length; i++) {
@@ -50,7 +50,7 @@ const generateCategoryies = () => {
     return arr;
 };
 
-const categories = generateCategoryies();
+const categories = generateCategories();
 const users = generateUsers();
 const advs = generateAdvs(categories);
 

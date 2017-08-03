@@ -6,6 +6,7 @@ const serveStatic = require('serve-static');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const fileUploader = require('express-fileupload');
+const dbMiddleware = require('./db/db-middleware');
 const MongoStore = require('connect-mongo')(session);
 const api = require('./routes/api');
 

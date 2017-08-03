@@ -9,16 +9,16 @@ router.route('/image')
 	.post( (req , resp)=>{
 		console.log('image/post')
 		if (!req.files){
-			resp.status(400).send('No files were uploaded.');
+			resp.status(400).json('No files were uploaded.');
 			return ;
 		}
 
 		imageService.uploadImage(req.files.uploadImage.data ,req.files.uploadImage.mimetype).then((res)=>{
 			resp.send(res);
 		}).catch((err)=>{
-			resp.send(err.toString());
+			resp.json(err);
 		});
-		//resp.send('123123');
+	
 	})
 	.get((req,resp)=>{
 		console.log('image/get')

@@ -6,7 +6,9 @@ const imageSchema = mongoose.Schema({
 		type: mongoose.SchemaTypes.Date,
 		required: [true],
 	},
-	mimetype:{type: mongoose.SchemaTypes.String},
+	mimetype:{
+		type: mongoose.SchemaTypes.String
+	},
 	data: mongoose.SchemaTypes.Buffer
 });
 

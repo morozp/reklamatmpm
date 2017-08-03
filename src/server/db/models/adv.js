@@ -22,11 +22,19 @@ const advSchema = mongoose.Schema({
 		price: mongoose.SchemaTypes.Number,
 		currency : mongoose.SchemaTypes.String,
 		description: mongoose.SchemaTypes.String,
-		category : {type: mongoose.SchemaTypes.String , enum : Object.keys(categories).map(key=>categories[key]) },
-		region : {type :  mongoose.SchemaTypes.String , enum : Object.keys(regions).map(key=>regions[key]) },
-		service : {type :  mongoose.SchemaTypes.String , enum : Object.keys(services).map(key=>services[key]) },
+		category : {
+			type: mongoose.SchemaTypes.String ,
+			enum : Object.keys(categories).map(key=>categories[key]) },
+		region : {
+			type :  mongoose.SchemaTypes.String ,
+			enum : Object.keys(regions).map(key=>regions[key])
+		},
+		service : {
+			type :  mongoose.SchemaTypes.String ,
+			enum : Object.keys(services).map(key=>services[key])
+		},
 		images :  mongoose.SchemaTypes.Array,
-		views: mongoose.SchemaTypes.Number,		
+		views: mongoose.SchemaTypes.Number,
 	}
 });
 

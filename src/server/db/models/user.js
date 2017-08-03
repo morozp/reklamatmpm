@@ -3,7 +3,7 @@ const connection = require('../connection-init').default;
 
 const userSchema = mongoose.Schema({
 	username: {
-		type: String, // тип: String
+		type: String,
 		required: [true, "usernameRequired"],
 		maxLength: [32, "tooLong"],
 		minLength: [6, "tooShort"],

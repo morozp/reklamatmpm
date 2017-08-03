@@ -12,9 +12,9 @@ const connectionOnRequest = (connection) => {
 		res.on('finish', afterResponse);
 		res.on('close', afterResponse);
 		
-		if(connection.readyState === 0) //disconnect
+		if(connection.readyState === 0) // disconnect
 		{
-			connection.openSet().then(()=>{
+			connection.open(connection.openOptions).then(()=>{
 				next();
 			}).catch((error)=>{
 				console.log(error)
@@ -22,7 +22,6 @@ const connectionOnRequest = (connection) => {
 			});
 		}
 		else{
-			
 			next();
 		}
 		// hooks to execute after response
