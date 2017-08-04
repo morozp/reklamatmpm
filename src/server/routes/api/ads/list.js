@@ -1,13 +1,17 @@
 const express = require('express');
 const advsService = require('../../../services/advs').init();
+const {
+    mainFilterGet,
+} = require('../../../services/models/filter');
 
 
 var router = express.Router();
 
-router.get('/', (req, resp) => {
+router.all('/', (req, resp) => {
+    const filter = mainFilterGet(req);
     const advs = advsService
-     .getAll()
-     .then((models)=>{
+        .getByFilter(filter)
+        .then((models)=>{
             resp.json(models.map(adv=>adv.toJSON({ virtuals: true })));
         }).catch((error)=>{
             // todo

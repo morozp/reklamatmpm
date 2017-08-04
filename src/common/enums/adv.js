@@ -1,5 +1,6 @@
 const services =
 	{
+		all:'all',
 		sale: 'sale',
 		exchange: 'exchange',
 		service: 'service',
@@ -17,12 +18,12 @@ const categories = {
 }
 
 const regions = {
+	all: 'all',
 	lb: 'lb',
 	mr: 'mr',
 	bn: 'bn',
 	dz: 'dz',
 	ag: 'ag',
-	all: 'all'
 };
 module.exports={
 	regions,

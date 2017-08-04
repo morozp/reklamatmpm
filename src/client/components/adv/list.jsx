@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom';
 import AdvItem from './item';
 import {EditItem} from './edit-item';
 import {AdvWrapper} from '../common/adv-wrapper';
+import advService from '../../api-services/adv';
 
 const advList = [
 	{
@@ -24,46 +25,6 @@ const advList = [
 		viewsCount: 1202020202,
 		isEditable: true,
 	},
-	{
-		price: 10,
-		currency: 'TMT',
-		images: ['bmw'],
-		description: `<div>
-			Ady: BMW F10 <br>
-			Ýeri: Ashgabat <br>
-			Reňki: gok<br>
-			FASTER THAN THE FASTEST<br>
-			Bahasy: 160.000,00 TMT <br>
-			Telefon: 99362606945 <br>
-			Line ID: @reklama.tm <br>
-			</div>`,
-		id :'item2',
-		publishDate : 'Сегодня, в 14:28',
-		viewsCount: 1202020202,
-		isEditable: true,
-	},
-	{
-		price: 10,
-		currency: 'TMT',
-		images: ['bmw'],
-		description: `
-		<div>
-			<br>
-			TMT 160.000,00 
-			<hr>
-			Ady: BMW F10 <br>
-			Ýeri: Ashgabat <br>
-			Reňki: gok<br>
-			FASTER THAN THE FASTEST<br>
-			Bahasy: 160.000,00 TMT <br>
-			Telefon: 99362606945 <br>
-			Line ID: @reklama.tm <br>
-		</div>`,
-		id :'item3',
-		publishDate : 'Сегодня, в 14:28',
-		viewsCount: 1202020202,
-		isEditable: false,
-	},
 ];
 
 class AdvList extends React.PureComponent {
@@ -75,6 +36,12 @@ class AdvList extends React.PureComponent {
 	}
 
 	componentDidMount() {
+		advService.getAll()
+		.then((advList)=>{
+			this.setState({advList});
+		}).catch((err)=>{
+			console.log(err);
+		})
 	}
 
 	render() {
