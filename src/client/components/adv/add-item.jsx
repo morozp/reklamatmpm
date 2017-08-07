@@ -38,7 +38,7 @@ const servicesOptions = [
 	{ value: services.exchange, name: 'Обменяю' },
 	{ value: services.service, name: 'Предоставлю услугу' },
 	{ value: services.buy, name: 'Куплю' },
-	{ value: services.gift, name: 'Подарю' },	
+	{ value: services.gift, name: 'Подарю' },
 ];
 
 const categoriesOptions = [
@@ -56,7 +56,7 @@ const regionsOptions = [
 	{ value: regions.mr, name: 'MR' },
 	{ value: regions.bn, name: 'BN' },
 	{ value: regions.dz, name: 'DZ' },
-	{ value: regions.ag, name: 'AG' },	
+	{ value: regions.ag, name: 'AG' },
 ];
 
 const propsT = {
@@ -92,8 +92,19 @@ const typedNamedHandledFieldProps = (name, value, onChange, type) => {
 class AddItemFormWrapped extends React.Component {
 	constructor(props) {
 		super(props);
+		
+		this.addImageId = this.addImageId.bind(this);
 	}
 
+	addImageId(newId) {
+		if (newId) {
+			
+			const formState = this.props.form.state;
+			let images = [...formState.images];
+			images.push(newId);
+			this.props.form.setState({ images });
+		}
+	}
 	render() {
 		const {
 			handleChangeByName
@@ -147,7 +158,7 @@ class AddItemFormWrapped extends React.Component {
 				</div>
 
 				<div className='images form-group'>
-					<ImageUploader />
+					<ImageUploader addImageId={this.addImageId} />
 				</div>
 
 				<div className='price form-group'>
@@ -212,9 +223,9 @@ export const AddItemForm = form(
 				isPending: false,
 			}
 		},
-		validate:(formState)=>{
+		validate: (formState) => {
 			const minDescriptionCount = 20;
-			
+
 			const errors = {};
 			if (!formState.price) {
 				errors.price = 'Пожалуйста введите цену';
@@ -228,10 +239,10 @@ export const AddItemForm = form(
 
 			return errors;
 		},
-		onSubmit:(formState)=>{
+		onSubmit: (formState) => {
 			return addNewItem(formState);
 		},
-		onDelete:(form)=>{
+		onDelete: (form) => {
 			console.log('delete');
 			return Promise.reject();
 		}

@@ -4,11 +4,11 @@ import { Link , Route } from 'react-router-dom';
 const vkLink = 'https://vk.com/reklamatm';
 const line = 'https://line.me/R/ti/p/%40reklama.tm';
 
-const getImageUrl = (itemId, imageId) => `/adv/items/${itemId}/${imageId}.jpg`;
+const getImageUrl = (itemId, imageId) => `/api/image?itemId=${itemId}`;
 
 const AdvImage = (props) => {
 	const { imageId, itemId } = props;
-	const imageUrl = getImageUrl( itemId,imageId);
+	const imageUrl = getImageUrl(imageId);
 
 	return (
 		<div className='img-center'>
