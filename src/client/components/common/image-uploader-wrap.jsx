@@ -12,11 +12,11 @@ const validateFile = (fileName, fileSize) => {
 
 	if (!/^.*\.(jpg|gif|png)$/i.test(fileName)) {
 		return {
-			fileName, msg: `Файлы такого типа мы не поддерживаем. 
-		Попробуйте загрузить другую картинку.`};
+			fileName, msg: `Р¤Р°Р№Р»С‹ С‚Р°РєРѕРіРѕ С‚РёРїР° РјС‹ РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµРј. 
+		РџРѕРїСЂРѕР±СѓР№С‚Рµ Р·Р°РіСЂСѓР·РёС‚СЊ РґСЂСѓРіСѓСЋ РєР°СЂС‚РёРЅРєСѓ.`};
 	}
 	if (fileSize > 10000000) {
-		return { fileName, msg: `Мы не поддердживаем файлы более10 мб.` };
+		return { fileName, msg: `РњС‹ РЅРµ РїРѕРґРґРµСЂРґР¶РёРІР°РµРј С„Р°Р№Р»С‹ Р±РѕР»РµРµ 10 РјР±.` };
 	}
 
 	return null;
@@ -40,7 +40,7 @@ const uploadOptions = {
 			onValidateBatch: (files) => {
 				const errors = [];
 				if (files.length > 10) {
-					errors.push('Можно загрузить не более 10 файлов.')
+					errors.push('РњРѕР¶РЅРѕ Р·Р°РіСЂСѓР·РёС‚СЊ РЅРµ Р±РѕР»РµРµ 10 С„Р°Р№Р»РѕРІ.')
 				}
 				files.forEach((file) => {
 					const error = validateFile(file.name, file.size);
@@ -135,7 +135,7 @@ class FileListener extends Component {
 						className='btn-block btn btn-primary'
 						multiple
 						accept='image/*' uploader={uploader}>
-						{this.state.status === 'uploaded' && (<span class='icon ion-upload'>Загрузить фото</span>)}
+						{this.state.status === 'uploaded' && (<span class='icon ion-upload'>Р—Р°РіСЂСѓР·РёС‚СЊ С„РѕС‚Рѕ</span>)}
 						{this.state.status === 'uploading' && (<Spinner name="three-bounce" color="purple"/>)}
 					</FileInput>
 				</div>
