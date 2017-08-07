@@ -22,10 +22,10 @@ const validateFile  = (file)=>{
 		&& mimeType !== jimp.MIME_PNG 
 		&& mimeType !== jimp.MIME_BMP
 	){
-		errors.push('ÐÐµ Ð¸Ð·Ð²ÐµÑÑ‚Ð½Ñ‹Ð¹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ Ñ„Ð°Ð¹Ð»Ð°.');
+		errors.push('Íå èçâåñòíûé ôîðìàò ôàéëà.');
 	}
 	if(file.data.byteLength > imageValidation.maxSize){
-		errors.push('Ð¤Ð°Ð¹Ð»Ñ‹ Ñ‚Ð°ÐºÐ¾Ð³Ð¾ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð° Ð¼Ñ‹ Ð½Ðµ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð´Ð¸Ð²Ð°ÐµÐ¼.');
+		errors.push('Ôàéëû òàêîãî ðàçìåðà ìû íå ïîääåðäèâàåì.');
 	}
 
 	return errors.length>0 ? errors : null;
