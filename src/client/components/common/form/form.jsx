@@ -97,6 +97,7 @@ export const form = (WrappedComponent, config = {}) => {
 		getFormApi() {
 			return {
 				state: this.state,
+				setState :this.setState.bind(this),
 				handleChangeByName: this.handleChangeByName,
 				handleSubmit: this.handleSubmit,
 				handleDelete: this.handleDelete,

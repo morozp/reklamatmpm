@@ -23,31 +23,40 @@ import {
 	ImageUploader
 } from './image-uploader';
 import { form } from '../common/form/form';
+import {
+	categories,
+	regions,
+	services,
+} from '../../../common/enums/adv';
+import {
+
+} from '../../../common/enums/order'
 
 const servicesOptions = [
-	{ value: 'sale', name: 'Продам' },
-	{ value: 'exchange', name: 'Обменяю' },
-	{ value: 'service', name: 'Предоставлю услугу' },
-	{ value: 'buy', name: 'Куплю' },
-	{ value: 'gift', name: 'Подарю' },
+	{ value: services.all, name: 'Все объявления' },
+	{ value: services.sale, name: 'Продам' },
+	{ value: services.exchange, name: 'Обменяю' },
+	{ value: services.service, name: 'Предоставлю услугу' },
+	{ value: services.buy, name: 'Куплю' },
+	{ value: services.gift, name: 'Подарю' },
 ];
 
 const categoriesOptions = [
-	{ value: 'all', name: 'Все объявления' },
-	{ value: 'realty', name: 'недвижимость' },
-	{ value: 'auto', name: 'авто' },
-	{ value: 'product', name: 'товары' },
-	{ value: 'service', name: 'услуги' },
-	{ value: 'other', name: 'прочее' },
+	{ value: categories.all, name: 'Все объявления' },
+	{ value: categories.realty, name: 'недвижимость' },
+	{ value: categories.auto, name: 'авто' },
+	{ value: categories.product, name: 'товары' },
+	{ value: categories.service, name: 'услуги' },
+	{ value: categories.other, name: 'прочее' },
 ];
 
 const regionsOptions = [
-	{ value: 'lb', name: 'Lb' },
-	{ value: 'mr', name: 'MR' },
-	{ value: 'bn', name: 'BN' },
-	{ value: 'dz', name: 'DZ' },
-	{ value: 'ag', name: 'AG' },
-	{ value: 'all', name: 'All' }
+	{ value: regions.all, name: 'Везде' },
+	{ value: regions.lb, name: 'Lb' },
+	{ value: regions.mr, name: 'MR' },
+	{ value: regions.bn, name: 'BN' },
+	{ value: regions.dz, name: 'DZ' },
+	{ value: regions.ag, name: 'AG' },
 ];
 
 const propsT = {
@@ -83,8 +92,19 @@ const typedNamedHandledFieldProps = (name, value, onChange, type) => {
 class AddItemFormWrapped extends React.Component {
 	constructor(props) {
 		super(props);
+		
+		this.addImageId = this.addImageId.bind(this);
 	}
 
+	addImageId(newId) {
+		if (newId) {
+			
+			const formState = this.props.form.state;
+			let images = [...formState.images];
+			images.push(newId);
+			this.props.form.setState({ images });
+		}
+	}
 	render() {
 		const {
 			handleChangeByName
@@ -138,7 +158,7 @@ class AddItemFormWrapped extends React.Component {
 				</div>
 
 				<div className='images form-group'>
-					<ImageUploader />
+					<ImageUploader addImageId={this.addImageId} />
 				</div>
 
 				<div className='price form-group'>
@@ -203,9 +223,9 @@ export const AddItemForm = form(
 				isPending: false,
 			}
 		},
-		validate:(formState)=>{
+		validate: (formState) => {
 			const minDescriptionCount = 20;
-			
+
 			const errors = {};
 			if (!formState.price) {
 				errors.price = 'Пожалуйста введите цену';
@@ -219,10 +239,10 @@ export const AddItemForm = form(
 
 			return errors;
 		},
-		onSubmit:(formState)=>{
+		onSubmit: (formState) => {
 			return addNewItem(formState);
 		},
-		onDelete:(form)=>{
+		onDelete: (form) => {
 			console.log('delete');
 			return Promise.reject();
 		}

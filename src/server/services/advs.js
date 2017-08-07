@@ -1,4 +1,12 @@
 const db = require('../db/models/index');
+const {
+    categories,
+    regions,
+    services,
+} = require('../../common/enums/adv');
+const {
+ orderTypes,
+} = require('../../common/enums/order');
 
 
 class AdvService {
@@ -11,6 +19,51 @@ class AdvService {
             (err,res)=>{
             console.log(err);
         });
+    }
+    getByFilter(filter){
+        let findObject = {};
+        let sort = {};
+        if(filter.region !== regions.all){
+            findObject.region = filter.region
+        }
+
+        if(filter.category !== categories.all){
+            findObject['props.category'] = filter.category
+        }
+
+        if(filter.service !== services.all){
+            findObject['props.category'] = filter.service
+        }
+
+        if(filter.search){
+            findObject['props.description'] =  RegExp(`.*${filter.search}.*`, 'i');;
+        }
+
+        if(filter.orderType === orderTypes.newest){
+            sort['publishDate'] = 1;
+        }
+
+        if(filter.orderType === orderTypes.priceHighestToLowest){
+            sort['props.price']= 1;
+        }
+
+        if(filter.orderType === orderTypes.priceLowestToHighest){
+            sort['props.price']= -1;
+        }
+
+        return db.Adv.find(
+            findObject,
+            null,
+            {
+                sort,
+                skip: filter.pageIndex * filter.itemPerPage,
+                limit: filter.itemPerPage
+            },
+            (err,res) => { 
+                console.log(err);
+             }
+        )
+        .exec();
     }
     get(advId) {
         return db.Adv.find({_id:advId}, (err)=>{

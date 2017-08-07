@@ -8,6 +8,7 @@ export const addNewItem = (state) => {
 		service: state.service,
 		price: state.price,
 		description: state.description,
+		images :state.images,
 	}
 
 	return advService
