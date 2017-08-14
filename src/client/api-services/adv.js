@@ -1,27 +1,80 @@
 
-const preUrl = '/ads';
-export default {
-    getAll: () => {
-        return fetch(preUrl, { method: 'get', cache: 'no-cache' }).then((response) => {
-            console.log(response);
+const preUrl = '/api/ads';
+const getFormData = (obj) => {
+    var data = new FormData();
+    data.append("json", JSON.stringify(obj));
+    return data;
+}
 
-            return Promise.resolve(response);
-        })
+export default {
+    getAll: (filter) => {
+        return fetch(
+            preUrl,
+            {
+                method: 'post',
+                cache: 'no-cache',
+                body: JSON.stringify(filter),
+                cache: 'no-cache',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            },
+        )
+            .then((resp) => resp.json())
+            .then((response) => {
+                console.log(response);
+                const list = response
+                    && Array.isArray(response)
+                    && response.map(
+                        (advItem) => {
+                            const {
+                            id,
+                                price,
+                                publishDate,
+                                props: {
+                                description,
+                                    views,
+                                    images,
+                            }
+                        } = advItem;
+
+                            return {
+                                id,
+                                description,
+                                price,
+                                publishDate,
+                                views,
+                                images,
+                            };
+                        })
+                        ||[];
+
+                return list;
+            })
     },
 
     get: (advId) => {
         return fetch(`${preUrl}/${advId}`, { method: 'get', cache: 'no-cache' }).then((response) => {
             console.log(response);
-
             return Promise.resolve(response);
         })
     },
 
     add: (newAdv) => {
-        const body = JSON.stringify(newAdv);
+        const body = getFormData(newAdv);
+
         return fetch(
             `${preUrl}/0`,
-            { method: 'post', body: body, cache: 'no-cache' }
+            {
+                method: 'post',
+                body: JSON.stringify(newAdv),
+                cache: 'no-cache',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }
         ).then((response) => {
             console.log(response);
             return Promise.resolve(response);
@@ -29,7 +82,7 @@ export default {
     },
 
     update: (adv) => {
-        const body = JSON.stringify(newAdv);
+        const body = getFormData(newAdv);
         return fetch(
             `${preUrl}/${advId}`,
             { method: 'put', body: body, cache: 'no-cache' }

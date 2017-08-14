@@ -5,7 +5,7 @@ import {
 	NamedHandledSelect,
 	NamedHandledTextArea,
 } from './../common/form/inputs';
-
+import { AdvWrapper } from './../common/adv-wrapper';
 import {
 	Label
 } from './../common/label';
@@ -15,37 +15,48 @@ import {
 import {
 	ValidationError
 } from './../common/form/validation-line';
-import { 
+import {
 	addNewItem,
 	deleteItem,
 } from '../../controllers/adv-item';
+import {
+	ImageUploader
+} from './image-uploader';
+import { form } from '../common/form/form';
+import {
+	categories,
+	regions,
+	services,
+} from '../../../common/enums/adv';
+import {
 
-
+} from '../../../common/enums/order'
 
 const servicesOptions = [
-	{ value: 'sale', name: 'Продам' },
-	{ value: 'exchange', name: 'Обменяю' },
-	{ value: 'service', name: 'Предоставлю услугу' },
-	{ value: 'buy', name: 'Куплю' },
-	{ value: 'gift', name: 'Подарю' },
+	{ value: services.all, name: 'Все объявления' },
+	{ value: services.sale, name: 'Продам' },
+	{ value: services.exchange, name: 'Обменяю' },
+	{ value: services.service, name: 'Предоставлю услугу' },
+	{ value: services.buy, name: 'Куплю' },
+	{ value: services.gift, name: 'Подарю' },
 ];
 
 const categoriesOptions = [
-	{ value: 'all', name: 'Все объявления' },
-	{ value: 'realty', name: 'недвижимость' },
-	{ value: 'auto', name: 'авто' },
-	{ value: 'product', name: 'товары' },
-	{ value: 'service', name: 'услуги' },
-	{ value: 'other', name: 'прочее' },
+	{ value: categories.all, name: 'Все объявления' },
+	{ value: categories.realty, name: 'недвижимость' },
+	{ value: categories.auto, name: 'авто' },
+	{ value: categories.product, name: 'товары' },
+	{ value: categories.service, name: 'услуги' },
+	{ value: categories.other, name: 'прочее' },
 ];
 
 const regionsOptions = [
-	{ value: 'lb', name: 'Lb' },
-	{ value: 'mr', name: 'MR' },
-	{ value: 'bn', name: 'BN' },
-	{ value: 'dz', name: 'DZ' },
-	{ value: 'ag', name: 'AG' },
-	{ value: 'all', name: 'All' }
+	{ value: regions.all, name: 'Везде' },
+	{ value: regions.lb, name: 'Lb' },
+	{ value: regions.mr, name: 'MR' },
+	{ value: regions.bn, name: 'BN' },
+	{ value: regions.dz, name: 'DZ' },
+	{ value: regions.ag, name: 'AG' },
 ];
 
 const propsT = {
@@ -78,185 +89,105 @@ const typedNamedHandledFieldProps = (name, value, onChange, type) => {
 	return namedHandledFieldProps(name, value, onChange, typed(type));
 }
 
-export class AddItemForm extends React.Component {
+class AddItemFormWrapped extends React.Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {
-			category: "",
-			service: "",
-			place: "",
-			price: "",
-			images: [],
-			description: "",
-			validationErrors: {},
-			isPending: false,
-		};
-
-		this.handleChangeByName = this.handleChangeByName.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleDelete = this.handleDelete.bind(this);
-		this.isValid = this.isValid.bind(this);
+		
+		this.addImageId = this.addImageId.bind(this);
 	}
 
-
-	handleChangeByName(event) {
-		const name = event.target.name;
-		if (name) {
-			const value = event.target.value;
-			this.setState(
-				{ [name]: value },
-				() => {
-					this.validate()
-				}
-			);
+	addImageId(newId) {
+		if (newId) {
+			
+			const formState = this.props.form.state;
+			let images = [...formState.images];
+			images.push(newId);
+			this.props.form.setState({ images });
 		}
-
-		this.validate();
 	}
-
-	handleSubmit(event) {
-		event.preventDefault();
-		this.validate()
-		.then(() => {
-			if (this.isValid()) {
-				this.setState({ isPending: true })
-				addNewItem(this.state)
-				.then((result) =>{
-					this.setState({ isPending: false });
-				})
-				
-			}
-		});
-	}
-
-	handleDelete(event) {
-		event.preventDefault();
-		alert('Вы уверены что хотите удалить?');
-	}
-
-	validate() {
-		const minDescriptionCount = 20;
-		const state = this.state;
-		const errors = {};
-		if (!state.price) {
-			errors.price = 'Пожалуйста введите цену';
-		}
-
-		if (!state.description) {
-			errors.description = 'Пожалуйста напишите текст объявления';
-		} else if (state.description.length < minDescriptionCount) {
-			errors.description = `Текст объявления должен быть не менее ${minDescriptionCount} символов`;
-		}
-
-		return new Promise(
-			(resolve) => {
-				this.setState({ validationErrors: errors }, () => {
-					resolve();
-				});
-			}
-		);
-	}
-
-	isValid() {
-		let result = true;
-		const validationErrors = this.state.validationErrors;
-		for (var prop in validationErrors) {
-			if (validationErrors.hasOwnProperty(prop)) {
-				result = false;
-				break;
-			}
-		}
-		return result;
-	}
-
 	render() {
-		const validationErrors = this.state.validationErrors;
-		const isValid = this.isValid();
+		const {
+			handleChangeByName
+		} = this.props && this.props.form;
+
+		const {
+			place,
+			category,
+			service,
+			price,
+			description,
+			validationErrors,
+		} = this.props && this.props.form && this.props.form.state;
+
 
 		return (
-			<form>
-				<Pending isPending={this.state.isPending}>
-				</Pending>
-				<div className='adv-add-item form-group'>
-					<div className='place form-group' >
-						<label htmlFor='place'>Местоположение:</label>
-						<NamedHandledSelect
-							id='place'
-							className='form-control'
-							name='place'
-							handleChangeByName={this.handleChangeByName}
-							value={this.state.place}
-							nameValueOptions={regionsOptions}
-						/>
-					</div>
+			<div className='adv-add-item form-group'>
+				<div className='place form-group' >
+					<label htmlFor='place'>Местоположение:</label>
+					<NamedHandledSelect
+						id='place'
+						className='form-control'
+						name='place'
+						handleChangeByName={handleChangeByName}
+						value={place}
+						nameValueOptions={regionsOptions}
+					/>
+				</div>
 
-					<div className='category form-group'>
-						<label htmlFor='category'>Категория:</label>
-						<NamedHandledSelect
-							id='category'
-							name='category'
-							className='form-control'
-							handleChangeByName={this.handleChangeByName}
-							value={this.state.category}
-							nameValueOptions={categoriesOptions}
-						/>
-					</div>
+				<div className='category form-group'>
+					<label htmlFor='category'>Категория:</label>
+					<NamedHandledSelect
+						id='category'
+						name='category'
+						className='form-control'
+						handleChangeByName={handleChangeByName}
+						value={category}
+						nameValueOptions={categoriesOptions}
+					/>
+				</div>
 
-					<div className='service form-group'>
-						<label htmlFor='service'>Хочу:</label>
-						<NamedHandledSelect
-							name='service'
-							className='form-control'
-							handleChangeByName={this.handleChangeByName}
-							value={this.state.service}
-							nameValueOptions={servicesOptions}
-						/>
-					</div>
+				<div className='service form-group'>
+					<label htmlFor='service'>Хочу:</label>
+					<NamedHandledSelect
+						name='service'
+						className='form-control'
+						handleChangeByName={handleChangeByName}
+						value={service}
+						nameValueOptions={servicesOptions}
+					/>
+				</div>
 
-					<div className='images form-group'>
-						<div className='upload-btn'>
-							<button
-								className='btn-block btn btn-primary'
-							>
-								Загрузить фото
-								</button>
-						</div>
-						<div className='uploaded-images'>
-							<image src='#'
-								width='100px'
-								height='100px'
-							/>
-						</div>
-					</div>
+				<div className='images form-group'>
+					<ImageUploader addImageId={this.addImageId} />
+				</div>
 
-					<div className='price form-group'>
-						<label htmlFor='price'>
-							Цена
+				<div className='price form-group'>
+					<label htmlFor='price'>
+						Цена
 							</label>
-						<input
-							id='price'
-							className='form-control'
-							value={this.state.price}
-							onChange={this.handleChangeByName}
-							name='price'
-						/>
-						<ValidationError error={validationErrors.price} />
-					</div>
+					<input
+						id='price'
+						className='form-control'
+						value={price}
+						onChange={handleChangeByName}
+						name='price'
+					/>
+					<ValidationError error={validationErrors.price} />
+				</div>
 
-					<div className='description-fields form-group'>
-						<NamedHandledTextArea
-							id='description'
-							className='form-control text-muted'
-							value={this.state.description}
-							handleChangeByName={this.handleChangeByName}
-							name='description'
-							placeholder='Напишите текст объявления...'
-						/>
-						<ValidationError error={validationErrors.description} />
-					</div>
+				<div className='description-fields form-group'>
+					<NamedHandledTextArea
+						id='description'
+						className='form-control text-muted'
+						value={description}
+						handleChangeByName={handleChangeByName}
+						name='description'
+						placeholder='Напишите текст объявления...'
+					/>
+					<ValidationError error={validationErrors.description} />
+				</div>
 
-					<div className='controls'>
+				{/*<div className='controls'>
 						<button
 							className='btn btn-default btn-lg btn-block'
 						>
@@ -271,10 +202,48 @@ export class AddItemForm extends React.Component {
 							className='btn btn-primary btn-lg btn-block'
 							type='submit'
 							onClick={this.handleSubmit}>Опубликовать</button>
-					</div>
-				</div>
-
-			</form>
+					</div>*/}
+			</div>
 		);
 	}
 };
+
+export const AddItemForm = form(
+	AddItemFormWrapped,
+	{
+		setInitialState: () => {
+			return {
+				category: "",
+				service: "",
+				place: "",
+				price: "",
+				images: [],
+				description: "",
+				validationErrors: {},
+				isPending: false,
+			}
+		},
+		validate: (formState) => {
+			const minDescriptionCount = 20;
+
+			const errors = {};
+			if (!formState.price) {
+				errors.price = 'Пожалуйста введите цену';
+			}
+
+			if (!formState.description) {
+				errors.description = 'Пожалуйста напишите текст объявления';
+			} else if (formState.description.length < minDescriptionCount) {
+				errors.description = `Текст объявления должен быть не менее ${minDescriptionCount} символов`;
+			}
+
+			return errors;
+		},
+		onSubmit: (formState) => {
+			return addNewItem(formState);
+		},
+		onDelete: (form) => {
+			console.log('delete');
+			return Promise.reject();
+		}
+	})
