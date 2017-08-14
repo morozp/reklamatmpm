@@ -50,14 +50,19 @@ class AdvService {
         if(filter.orderType === orderTypes.priceLowestToHighest){
             sort['props.price']= -1;
         }
-
+		if(!filter.itemsPerPage || filter.itemsPerPage>10){
+            filter.itemsPerPage = 10;
+        }
+        if(!filter.pageIndex ){
+            filter.pageIndex = 0;
+        }
         return db.Adv.find(
             findObject,
             null,
             {
                 sort,
-                skip: filter.pageIndex * filter.itemPerPage,
-                limit: filter.itemPerPage
+                skip: filter.itemsPerPage * filter.pageIndex,
+                limit: filter.itemsPerPage,
             },
             (err,res) => { 
                 console.log(err);

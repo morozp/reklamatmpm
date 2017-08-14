@@ -22,7 +22,7 @@ if (!updatedItem
     throw Error(notWorkedCorectly('update'));
 }
 const forAddItem = { id: 'XXXX' };
-const advsCountBeforAdd = all.length;
+const advsCountBeforeAdd = all.length;
 const added = advService.add(forAddItem);
 const advsCountAfterAdd = advService.getAll().length;
 

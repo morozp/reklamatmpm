@@ -4,15 +4,14 @@ const fileStoreConnection = require('../../../db/connection-init').fileStorage;
 const router = express.Router();
 const imageService = require('../../../services/image').init();
 const jimp = require('jimp');
-
+/*const cloudinary = require('cloudinary');
 const imageValidation = {
 	maxSize: 10000000,
 	maxImageHeight: 1200,
 	maxImageWidth: 800,
 	savedMimeType :jimp.MIME_JPEG,
 	allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-}
-
+}*/
 
 const validateFile  = (file)=>{	
 	let  errors = [];
@@ -22,10 +21,10 @@ const validateFile  = (file)=>{
 		&& mimeType !== jimp.MIME_PNG 
 		&& mimeType !== jimp.MIME_BMP
 	){
-		errors.push('Не известный формат файла.');
+		errors.push('File type not allowed.');
 	}
 	if(file.data.byteLength > imageValidation.maxSize){
-		errors.push('Файлы такого размера мы не поддердиваем.');
+		errors.push('File size is too large.');
 	}
 
 	return errors.length>0 ? errors : null;

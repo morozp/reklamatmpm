@@ -25,7 +25,7 @@ const regions = {
 	dz: 'dz',
 	ag: 'ag',
 };
-module.exports={
+module.exports ={
 	regions,
 	categories,
 	services,
