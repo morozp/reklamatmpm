@@ -12,24 +12,23 @@ const mainFilterGet  = (request)=>{
 	const body  = request.body;
 
 	const {
-		search = '',
+		search = null,
 		region = regions.all,
 		category = categories.all,
 		service = services.all,
 		orderType = orderTypes.newest,
-		itemsPerPage = 20,
+		itemsPerPage = 1,
 		pageIndex = 0,
-	} = body;
+	} = request.body;
 
-	
 	return {
 		search,
 		region,
 		category,
 		service,
 		orderType,
-		pageIndex,
-		itemsPerPage,
+		pageIndex :  Number(pageIndex),
+		itemsPerPage : Number(itemsPerPage),
 	}
 }
 

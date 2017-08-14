@@ -24,8 +24,6 @@ class EditItemWrapped extends React.PureComponent {
 		} = formProps;
 
 		return (
-			
-				
 				<div className='adv-edit-item form-group'>
 					<div className='images form-group'>
 						<ImageUploader />

@@ -1,23 +1,52 @@
-import React from 'react';
-import { Link , Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link, Route } from 'react-router-dom';
+import Spinner from 'react-spinkit'
 
 const vkLink = 'https://vk.com/reklamatm';
 const line = 'https://line.me/R/ti/p/%40reklama.tm';
 
 const getImageUrl = (itemId, imageId) => `/api/image?itemId=${itemId}`;
 
-const AdvImage = (props) => {
-	const { imageId, itemId } = props;
-	const imageUrl = getImageUrl(imageId);
+const imageStatuses = {
+	pending: 'pending',
+	complete: 'complete',
+	error: 'error',
+}
+class AdvImage extends Component {
+	 constructor(props) {
+		super(props);
+		this.state = {
+			status: imageStatuses.pending,
+		};
+	}
 
-	return (
-		<div className='img-center'>
-			<img
-				src={imageUrl}
-				width='auto'
-			/>
-		</div>
-	)
+	handleImageLoaded() {
+		this.setState({ status: imageStatuses.complete });
+	}
+ 
+	handleImageErrored() {
+		this.setState({ status: imageStatuses.error });
+	}
+
+	render() {
+		const { imageId, itemId } = this.props;
+		const imageUrl = getImageUrl(imageId);
+
+		return (
+			<div className={'img-center' + ' ' + this.state.status }>
+				<img
+					src={imageUrl}
+					width='auto'
+					onLoad={this.handleImageLoaded.bind(this)}
+					onError={this.handleImageErrored.bind(this)}
+				/>
+				{
+					this.state.status === imageStatuses.pending &&
+					(<Spinner name='chasing-dots' color='purple'/>)
+				}
+			</div>
+		)
+	}
 }
 
 const AdvPrice = (props) => {
@@ -76,12 +105,12 @@ const AdvItem = (props) => {
 		isEditable = false,
 		match = {},
 	} = props;
-
+	let imagesForRender = !!images.length?[images[0]]:[];
 	return (
 		<div className='adv-item'>
 
 			<div className='images'>
-				{images.map(
+				{imagesForRender.map(
 					(imgId) => (
 						<AdvImage
 							key={imgId}
@@ -96,7 +125,7 @@ const AdvItem = (props) => {
 					currency={currency}
 					price={price}
 				/>
-				<hr/>
+				<hr />
 			</div>
 
 			<div className='description-fields'>
