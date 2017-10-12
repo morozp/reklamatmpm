@@ -49,7 +49,6 @@ const init = function (connectionString, connectionName) {
 }
 
 const defaultConnection = init(config.connections.default, 'Default');
-const fileStorageConnection = init(config.connections.fileStore, 'File Storage');
 
 const closeConnection = function (connection, connName) {
 	if(connection.readyState !== 0){	
@@ -72,22 +71,6 @@ const gracefulExit = ()=>{
 		process.exit(1);
 		process.exit(2);
 	})
-
-	
-	
-	/*.catch((error)=>{
-		console.log(error);
-		throw error;
-	})
-	.then(()=>{
-		closeConnection(fileStorageConnection,'File Store');
-	})
-	.catch((error)=>{
-		console.log(error);
-	})
-	.then(()=>{
-		process.exit(0);
-	});*/
 };
 
 process
@@ -96,5 +79,4 @@ process
 
 module.exports = {
 	default: defaultConnection,
-	fileStorage: fileStorageConnection,
 }

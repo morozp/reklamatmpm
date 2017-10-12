@@ -3,9 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import AdvItem from './item';
 import { EditItem } from './edit-item';
 import { AdvWrapper } from '../common/adv-wrapper';
-import advService from '../../api-services/adv';
 import Spinner from 'react-spinkit';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroll-component';
 const {
 	categories,
 	regions,
@@ -38,15 +37,15 @@ const getFilter = (props, state, pageIndex) => {
 	}
 }
 
-const loadItems = (pageIndex,comp) => {
-
-	comp.setState({ pageIndex, hasMore: false });
+const pageCount = 5;
+const loadItems = (x,comp) => {	
+	comp.setState({pageIndex: Math.floor(comp.state.advList.length/pageCount), hasMore: false });
 	const filter = getFilter(comp.props, comp.state);
 
 	return advService.getAll(filter)
 		.then((advList) => {
 			if (Array.isArray(advList) && advList.length > 0) {
-				const onlyNewAds = advList.filter((advItem)=>{
+				/*const onlyNewAds = advList.filter((advItem)=>{
 					if(comp.loadedIds[advItem.id]){
 						return false;
 					}
@@ -54,9 +53,10 @@ const loadItems = (pageIndex,comp) => {
 					return true;
 				})
 				if(onlyNewAds.length > 0){
-					let newAdvList = [...comp.state.advList, ...onlyNewAds];
-					comp.setState({ advList: newAdvList, hasMore:true});
-				}
+					var x = comp.state.advList.concat(onlyNewAds);*/
+					var x = comp.state.advList.concat(advList);
+					comp.setState({ advList: x, hasMore:true});
+				/*}*/
 			}
 			else{
 				setTimeout(()=>{
@@ -86,15 +86,12 @@ class AdvList extends React.PureComponent {
 	}
 
 	loadMore(pageIndex) {
-		loadItems(pageIndex,this);
+		loadItems(pageIndex, this);
 	};
-
 
 	componentDidMount() {
-		//loadItems(this.props, this.state);
+		loadItems(this.props, this);
 	};
-
-
 
 	render() {
 		const {
@@ -105,14 +102,14 @@ class AdvList extends React.PureComponent {
 		return (
 			<div className='adv-list'>
 				<InfiniteScroll
-					pageStart={0}
-					loadMore={this.loadMore}
-					hasMore={hasMore}
-					threshold={0}
+					next={this.loadMore}
+					hasMore={true}
 					loader={
-						(<div className="loader">
+						
+						
+						(<h4 className="loader" style={{height:20}}>
 							<Spinner name="three-bounce" color="purple" />
-						</div>)}
+					</h4>)}
 				>
 					{
 						advList.map(
@@ -125,12 +122,13 @@ class AdvList extends React.PureComponent {
 										/>
 										<Route
 											path={`/`}
-											render={() => (<AdvItem {...advItem} />)}>
-										</Route>
+											render={() => (<AdvItem {...advItem} />)}
+										/>
 									</Switch>
 								</AdvWrapper>
 							)
 						)
+						
 					}
 				</InfiniteScroll>
 			</div>
