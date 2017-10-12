@@ -1,5 +1,6 @@
 import './image-uploader-wrap.less';
 import React, { Component } from 'react';
+import {Image ,Transformation} from 'cloudinary-react';
 import FineUploaderTraditional from 'fine-uploader-wrappers'
 import FileInput from 'react-fine-uploader/file-input';
 import ProgressBar from 'react-fine-uploader/progress-bar';
@@ -57,6 +58,7 @@ const uploadOptions = {
 		}
 	}
 }
+
 const uploader = new FineUploaderTraditional(uploadOptions);
 
 const fileInputChildren = <span>Choose files</span>
@@ -65,11 +67,11 @@ export const Thumbnail = (props) => {
 	const {
 		imageId
 	} = props;
-
-	const imgUrl = `${imageUploaderUrl}?itemId=${imageId}`;
 	return (
 		<div className='thumbnail-wrap'>
-			<img src={imgUrl} />
+			<Image publicId={imageId}>
+				<Transformation width="200" crop="scale" angle="10"/>
+			</Image>
 		</div>
 	)
 }
@@ -135,8 +137,8 @@ class FileListener extends Component {
 						className='btn-block btn btn-primary'
 						multiple
 						accept='image/*' uploader={uploader}>
-						{this.state.status === 'uploaded' && (<span class='icon ion-upload'>Загрузить фото</span>)}
-						{this.state.status === 'uploading' && (<Spinner name="three-bounce" color="purple"/>)}
+						{this.state.status === 'uploaded' && (<span className='icon ion-upload'>Загрузить фото</span>)}
+						{this.state.status === 'uploading' && (<Spinner name='three-bounce' color='purple'/>)}
 					</FileInput>
 				</div>
 			</div>

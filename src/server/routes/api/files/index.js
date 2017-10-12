@@ -1,36 +1,40 @@
 const express = require('express');
-const dbMiddleware = require('../../../db/db-middleware');
-const fileStoreConnection = require('../../../db/connection-init').fileStorage;
 const router = express.Router();
-const imageService = require('../../../services/image').init();
-const jimp = require('jimp');
-/*const cloudinary = require('cloudinary');
+const imageCloudSerice = require('../../../services/image-cloud');
+
 const imageValidation = {
 	maxSize: 10000000,
-	maxImageHeight: 1200,
-	maxImageWidth: 800,
-	savedMimeType :jimp.MIME_JPEG,
+	maxImageHeight: 800,
+	maxImageWidth: 600,	
 	allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-}*/
+}
 
-const validateFile  = (file)=>{	
-	let  errors = [];
+const MIME_TYPES = {
+	GIF :'image/gif',
+	JPEG:'image/jpeg',
+	PJPEG:'image/pjpeg',
+	PNG:'image/png',
+	BMP:'image/vnd.wap.wbmp',
+}
+const validateFile = (file) => {
+	let errors = [];
 	const mimeType = file.mimetype.toLowerCase();
-	if(
-		mimeType !== jimp.MIME_JPEG 
-		&& mimeType !== jimp.MIME_PNG 
-		&& mimeType !== jimp.MIME_BMP
-	){
+	if (
+		mimeType !== MIME_TYPES.JPEG
+		&& mimeType !== MIME_TYPES.PJPEG
+		&& mimeType !== MIME_TYPES.GIF
+		&& mimeType !== MIME_TYPES.PNG
+		&& mimeType !== MIME_TYPES.BMP
+	) {
 		errors.push('File type not allowed.');
 	}
-	if(file.data.byteLength > imageValidation.maxSize){
+	if (file.data.byteLength > imageValidation.maxSize) {
 		errors.push('File size is too large.');
 	}
 
-	return errors.length>0 ? errors : null;
+	return errors.length > 0 ? errors : null;
 }
 
-router.use('/image', dbMiddleware(fileStoreConnection));
 router.route('/image')
 	.post((req, resp) => {
 		if (!(req.files && req.files.qqfile && req.files.qqfile.data)) {
@@ -39,30 +43,13 @@ router.route('/image')
 		}
 
 		const errors = validateFile(req.files.qqfile);
-		if(errors){
+		if (errors) {
 			return resp.json(errors);
 		}
-		
-		jimp.read(req.files.qqfile.data)
-			.then((image) => {
-				return image
-					.scaleToFit(imageValidation.maxImageWidth, imageValidation.maxImageHeight)
-					.getBuffer(jimp.MIME_JPEG,(error, buffer)=>{
-						if(error){
-							 throw error;
-						}
-						return buffer;
-					});
-			})
-			.then((buffer) => {
-				return imageService.uploadImage(buffer, imageValidation.savedMimeType)
-					.then((res) => {
-						resp.json({imageId:res, success:true});
-					}).catch((err) => {
-						resp.send(err);
-					});
-			})
-			.catch((err)=>{
+		imageCloudSerice.sendAsync(req.files.qqfile)
+			.then((public_id) => {
+				resp.json({ imageId: public_id, success: true });
+			}).catch((err) => {
 				console.log(err);
 				resp.send(err);
 			});
@@ -73,7 +60,7 @@ router.route('/image')
 			resp.status(400).send('File not found.');
 		}
 		else {
-			imageService.loadImage(req.query.itemId)
+			/*imageService.loadImage(req.query.itemId)
 				.then((res) => {
 					resp.set('Content-Type', res.mimetype);
 					resp.contentType = res.mimetype;
@@ -81,9 +68,8 @@ router.route('/image')
 				})
 				.catch((err) => {
 					resp.send(err);
-				})
+				})*/
 		}
 	})
 
 module.exports = router;
-

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom';
-import Spinner from 'react-spinkit'
+import Spinner from 'react-spinkit';
+import { Image, Transformation } from 'cloudinary-react';
 
 const vkLink = 'https://vk.com/reklamatm';
 const line = 'https://line.me/R/ti/p/%40reklama.tm';
@@ -13,7 +14,7 @@ const imageStatuses = {
 	error: 'error',
 }
 class AdvImage extends Component {
-	 constructor(props) {
+	constructor(props) {
 		super(props);
 		this.state = {
 			status: imageStatuses.pending,
@@ -23,29 +24,21 @@ class AdvImage extends Component {
 	handleImageLoaded() {
 		this.setState({ status: imageStatuses.complete });
 	}
- 
+
 	handleImageErrored() {
 		this.setState({ status: imageStatuses.error });
 	}
 
 	render() {
 		const { imageId, itemId } = this.props;
-		const imageUrl = getImageUrl(imageId);
 
-		return (
-			<div className={'img-center' + ' ' + this.state.status }>
-				<img
-					src={imageUrl}
-					width='auto'
-					onLoad={this.handleImageLoaded.bind(this)}
-					onError={this.handleImageErrored.bind(this)}
-				/>
-				{
-					this.state.status === imageStatuses.pending &&
-					(<Spinner name='chasing-dots' color='purple'/>)
-				}
+		return imageId && (
+			<div className={'image-wrapper'}>
+				<Image publicId={imageId.toString()}>
+					<Transformation width="200" crop="scale" angle="10" />
+				</Image>
 			</div>
-		)
+		) || null
 	}
 }
 
@@ -105,11 +98,11 @@ const AdvItem = (props) => {
 		isEditable = false,
 		match = {},
 	} = props;
-	let imagesForRender = !!images.length?[images[0]]:[];
+	let imagesForRender = !!images.length ? [images[0]] : [];
 	return (
 		<div className='adv-item'>
 
-			<div className='images'>
+			{imagesForRender.length && (<div className='images'>
 				{imagesForRender.map(
 					(imgId) => (
 						<AdvImage
@@ -118,7 +111,8 @@ const AdvItem = (props) => {
 							itemId={id}
 						/>
 					))}
-			</div>
+			</div>)
+			}
 
 			<div>
 				<AdvPrice

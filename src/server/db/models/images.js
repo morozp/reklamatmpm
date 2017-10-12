@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const connection = require('../connection-init').fileStorage;
+const connection = require('../connection-init').default;
 
 const imageSchema = mongoose.Schema({
 	createDate: {
