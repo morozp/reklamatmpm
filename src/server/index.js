@@ -5,9 +5,13 @@ const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+var passport = require('passport');
 const fileUploader = require('express-fileupload');
 const MongoStore = require('connect-mongo')(session);
 const api = require('./routes/api');
+const auth = require('./routes/auth');
+
+require('./passport');
 
 
 const app = express();
@@ -63,6 +67,9 @@ app.engine('jsx', require('express-react-views').createEngine());
 
 app.use(logger('dev'));
 app.use(bodyParser());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(auth);
 app.use(api);
 
 
