@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const connection = require('../connection-init').default;
 
 const imageSchema = mongoose.Schema({
-	createDate: {
-		type: mongoose.SchemaTypes.Date,
-		required: [true],
-	},
-	mimetype:{
-		type: mongoose.SchemaTypes.String
-	},
-	data: mongoose.SchemaTypes.Buffer
+    createDate: {
+        type: mongoose.SchemaTypes.Date,
+        required: [true],
+    },
+    mimetype:{
+        type: mongoose.SchemaTypes.String
+    },
+    data: mongoose.SchemaTypes.Buffer
 });
 
 

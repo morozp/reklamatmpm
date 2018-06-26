@@ -2,18 +2,16 @@ import './index.less';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-
-import App from './components/app'
+import App from './components/app';
 import {
-	BrowserRouter,
-	Route,
-} from 'react-router-dom'
+    BrowserRouter,
+} from 'react-router-dom';
 
 ReactDOM.render(
-	(
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
-	),
-	document.getElementById('app-container')
+    (
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    ),
+    document.getElementById('app-container')
 );

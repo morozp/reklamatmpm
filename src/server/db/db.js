@@ -1,4 +1,4 @@
-const faker = require('faker/locale/ru');;
+const faker = require('faker/locale/ru');
 const regions = ['lb', 'mr', 'bn', 'dz', 'ag', 'all'];
 const generateUsers = () => {
     const arr = [];
@@ -58,7 +58,7 @@ const db = {
     users,
     categories,
     advs,
-}
+};
 
 
 module.exports = db;

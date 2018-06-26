@@ -8,12 +8,12 @@ mongoose.connect('mongodb://reklamatmpm:reklamatmpm@ds117093.mlab.com:17093/rekl
 
 mongoose.connection.on('error',(err)=>
 {
-    console.error("Database Connection Error: " + err);
+    console.error('Database Connection Error: ' + err);
     console.error('MongoDB SERVER NOT AVAILABLE!');
     process.exit(2);
 });
 
 mongoose.connection.on('connected',()=>
 {
-    console.info("Successfully connected to MongoDB Database"); 
+    console.info('Successfully connected to MongoDB Database'); 
 });

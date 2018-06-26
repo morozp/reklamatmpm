@@ -11,10 +11,10 @@ const api = require('./routes/api');
 
 
 const app = express();
-const DIST_DIR = path.join(__dirname, "dist"),
-    CONTENT_DIR = path.join(__dirname, "content"),
-    HTML_FILE = path.join(DIST_DIR, "index.html"),
-    isDevelopment = process.env.NODE_ENV !== "production",
+const DIST_DIR = path.join(__dirname, 'dist'),
+    CONTENT_DIR = path.join(__dirname, 'content'),
+    HTML_FILE = path.join(DIST_DIR, 'index.html'),
+    isDevelopment = process.env.NODE_ENV !== 'production',
     DEFAULT_PORT = 5000 ;
 
 // init data bases
@@ -43,7 +43,7 @@ else {
 
 
 const connection = require('./db/connection-init').default;
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(session({
     secret: 'winner',
     resave: false,

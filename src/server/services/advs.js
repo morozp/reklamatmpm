@@ -5,7 +5,7 @@ const {
     services,
 } = require('../../common/enums/adv');
 const {
- orderTypes,
+    orderTypes,
 } = require('../../common/enums/order');
 
 
@@ -17,26 +17,26 @@ class AdvService {
     getAll() {
         return db.Adv.find(
             (err,res)=>{
-            console.log(err);
-        });
+                console.log(err);
+            });
     }
     getByFilter(filter){
         let findObject = {};
         let sort = {};
         if(filter.region !== regions.all){
-            findObject.region = filter.region
+            findObject.region = filter.region;
         }
 
         if(filter.category !== categories.all){
-            findObject['props.category'] = filter.category
+            findObject['props.category'] = filter.category;
         }
 
         if(filter.service !== services.all){
-            findObject['props.category'] = filter.service
+            findObject['props.category'] = filter.service;
         }
 
         if(filter.search){
-            findObject['props.description'] =  RegExp(`.*${filter.search}.*`, 'i');;
+            findObject['props.description'] =  RegExp(`.*${filter.search}.*`, 'i');
         }
 
         if(filter.orderType === orderTypes.newest){
@@ -50,7 +50,7 @@ class AdvService {
         if(filter.orderType === orderTypes.priceLowestToHighest){
             sort['props.price']= -1;
         }
-		if(!filter.itemsPerPage || filter.itemsPerPage>10){
+        if(!filter.itemsPerPage || filter.itemsPerPage>10){
             filter.itemsPerPage = 10;
         }
         if(!filter.pageIndex ){
@@ -66,9 +66,9 @@ class AdvService {
             },
             (err,res) => { 
                 console.log(err);
-             }
+            }
         )
-        .exec();
+            .exec();
     }
     get(advId) {
         return db.Adv.find({_id:advId}, (err)=>{
@@ -81,10 +81,10 @@ class AdvService {
             .then((advModel) =>{
                 if(advModel){
                     advModel.views = (advModel.views || 0) + 1;
-                     return advModel.save();
+                    return advModel.save();
                 }
                 return Promise.resolve();
-            })
+            });
     }
     addByUser(newAdv) {
         //todo
@@ -102,11 +102,11 @@ class AdvService {
                 images : newAdv.images,
                 views: 0,
             }
-        })
+        });
         
         return adv.save((err, product , numAffected)=>{
             if(err){
-                console.log(err)
+                console.log(err);
             }
             else{
                 console.log(product);
@@ -114,7 +114,7 @@ class AdvService {
         });
     }
     addByAdmin(adv){
-          const advModel = new db.Adv({
+        const advModel = new db.Adv({
             createDate: Date.now(),
             editDate: Date.now(),
             isEdited: true,
@@ -130,11 +130,11 @@ class AdvService {
                 region: adv.region,
                 service: adv.service
             }
-        })
+        });
         
         return advModel.save((err, product , numAffected)=>{
             if(err){
-                console.log(err)
+                console.log(err);
             }
             else{
                 console.log(product);
@@ -153,32 +153,32 @@ class AdvService {
     }
     updateByAdmin(){
         let updatedProps = {
-                'props.price' : adv.description,
-                'props.description' : adv.description,
-                'props.images' : adv.images,
-                'props.category':adv.category,
-                'props.service':adv.service,
-                'props.region' : adv.description,
-                'props.views' : adv.views,
-                editDate  : Date.now(),
-                isEdited : true,
-            };
+            'props.price' : adv.description,
+            'props.description' : adv.description,
+            'props.images' : adv.images,
+            'props.category':adv.category,
+            'props.service':adv.service,
+            'props.region' : adv.description,
+            'props.views' : adv.views,
+            editDate  : Date.now(),
+            isEdited : true,
+        };
         if(adv.isPublish){
             updatedProps.publishDate = Date.now();
             updatedProps.isPublished = true;
         }
-         return db.Adv.update(
+        return db.Adv.update(
             {_id:adv.id}, updatedProps).exec();
     }
     deleteByUser(advId) {
         return  db.Adv.findById(advId)
-        .exec()
-        .then(model=>{
+            .exec()
+            .then(model=>{
             //todo  check if user owner
-            if(model && true === true){
-                return model.remove();
-            }
-        });
+                if(model && true === true){
+                    return model.remove();
+                }
+            });
     }
 }
 

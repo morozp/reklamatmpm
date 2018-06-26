@@ -30,16 +30,16 @@ if (
     !added
     || added.id !== forAddItem.id
     || advsCountBeforAdd !== advsCountAfterAdd - 1
-    )
-    {
+)
+{
     throw Error(notWorkedCorectly('add'));
 }
 
 advService.delete(added.id);
 if (
     advsCountBeforAdd !== advService.getAll().length    
-    )
-    {
+)
+{
     throw Error(notWorkedCorectly('delete'));
 }
 

@@ -15,7 +15,7 @@ router.all('/', (req, resp) => {
             resp.json(models.map(adv=>adv.toJSON({ virtuals: true })));
         }).catch((error)=>{
             // todo
-            resp.end(error)
+            resp.end(error);
         });
 });
 
