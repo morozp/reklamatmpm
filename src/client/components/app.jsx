@@ -6,6 +6,7 @@ import { TopPanel } from './top-panel';
 import Footer from './footer';
 import { AddItemForm } from './adv/add-item';
 import { AdvList } from './adv/list';
+import {Page} from './tets-props/page';
 import { CloudinaryContext } from 'cloudinary-react';
 const cloudName = require("../../common/config").cloudinary_config.cloud_name;
 
@@ -20,9 +21,12 @@ class App extends React.Component {
                         <Route exact path='/' component={AdvList} />
                         <Route path='/edit' component={AdvList} />
                         <Route path='/new' component={AddItemForm} />
+                        <Route path='/test-props' component={Page} />
                     </div>
                 </CloudinaryContext>
                 <Footer />
+                
+
             </div>
         );
     }
