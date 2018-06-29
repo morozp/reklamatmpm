@@ -31,10 +31,10 @@ class ExtendPureComponent extends React.PureComponent {
     render() {
         console.log('less render');
         const { text, value } = this.props;
-        return <div>
+        return (<div>
             <span>{text}</span>
             <span>{value}</span>
-        </div>
+        </div>);
     }
 }
 
@@ -96,13 +96,13 @@ class Page extends React.Component {
             <LessState
                 text={this.state.less.text}
                 value={this.state.less.value}
-                onClick={()=>({})}
+                onClick={() => ({})}
             />
             <ExtendComponent
                 text={this.state.component.text}
                 value={this.state.component.value}
             />
-             <ExtendPureComponent
+            <ExtendPureComponent
                 text={this.state.pure.text}
                 value={this.state.pure.value}
             />
