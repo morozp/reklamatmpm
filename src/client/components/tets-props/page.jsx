@@ -1,10 +1,17 @@
 import React from 'react';
 
-const LessState = ({ text, value }) => {
+import './style.less';
+
+const StateLess = ({ text, value,onClick}) => {
     console.log('less render');
-    return <div>
+    const onclick = ()=>{
+        onClick(value);
+    }
+
+    return <div className={'child'}>
         <span>{text}</span>
         <span>{value}</span>
+        <button onClick={onclick}/>
     </div>
 }
 
@@ -16,7 +23,7 @@ class ExtendComponent extends React.Component {
     render() {
         console.log('component render');
         const { text, value } = this.props;
-        return <div>
+        return <div className={'child'}>
             <span>{text}</span>
             <span>{value}</span>
         </div>
@@ -29,9 +36,9 @@ class ExtendPureComponent extends React.PureComponent {
     }
 
     render() {
-        console.log('less render');
+        console.log('pure render');
         const { text, value } = this.props;
-        return (<div>
+        return (<div className={'child'}>
             <span>{text}</span>
             <span>{value}</span>
         </div>);
@@ -44,11 +51,14 @@ class ExtendShouldComponent extends React.Component {
     }
 
     shouldComponentUpdate(prevProps, prevState) {
-        return this.props !== prevProps;
+        const should = this.props.value !== prevProps.value 
+        && this.props.text!== this.props.text;
+        return should;
     }
     render() {
+        console.log('should render');
         const { text, value } = this.props;
-        return (<div>
+        return (<div className={'child'}>
             <span>{text}</span>
             <span>{value}</span>
         </div>);
@@ -86,25 +96,30 @@ class Page extends React.Component {
     render() {
         const { text, value } = this.state;
 
-        return (<div>
-            <div>
+        return (<div className={'parent'}> 
+            <div className={'child'}>
                 <span>{text}</span>
                 <span>{value}</span>
             </div>
             <button
                 onClick={this.changeParrentStateValue}>change parrent state value</button>
-            <LessState
+            <StateLess
                 text={this.state.less.text}
                 value={this.state.less.value}
-                onClick={() => ({})}
+                onClick={((value)=>{console.log(value)})}                
             />
             <ExtendComponent
                 text={this.state.component.text}
                 value={this.state.component.value}
+            
             />
             <ExtendPureComponent
                 text={this.state.pure.text}
                 value={this.state.pure.value}
+            />
+            <ExtendShouldComponent
+                text={this.state.should.text}
+                value={this.state.should.value}
             />
         </div>);
     }

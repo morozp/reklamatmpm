@@ -41,9 +41,9 @@ class AdvImage extends Component {
     }
 }
 
-// AdvImage.propTypes = {
-//     imageId: PropTypes.string.isRequired,
-// };
+AdvImage.propTypes = {
+    imageId: PropTypes.string.isRequired,
+};
 
 const AdvPrice = (props) => {
     const {
@@ -60,10 +60,10 @@ const AdvPrice = (props) => {
     );
 };
 
-// AdvPrice.propTypes = {
-//     currency: PropTypes.string.isRequired,
-//     price: PropTypes.string.isRequired,
-// };
+AdvPrice.propTypes = {
+    currency: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+};
 
 const AdvDescription = (props) => {
     const {
@@ -78,11 +78,9 @@ const AdvDescription = (props) => {
     );
 };
 
-// AdvDescription.propTypes = {
-//     description: PropTypes.string.isRequired,
-// };
-
-
+AdvDescription.propTypes = {
+    description: PropTypes.string.isRequired,
+};
 
 const Statistics = (props) => {
     const {
@@ -100,10 +98,10 @@ const Statistics = (props) => {
         </div>);
 };
 
-// Statistics.propTypes = {
-//     publishDate: PropTypes.string,
-//     viewsCount: PropTypes.number,
-// };
+Statistics.propTypes = {
+    publishDate: PropTypes.string,
+    viewsCount: PropTypes.number,
+};
 
 const AdvItem = (props) => {
     const {
@@ -162,15 +160,15 @@ const AdvItem = (props) => {
     );
 };
 
-// AdvItem.propTypes = {
-//     price: PropTypes.number,
-//     currency: PropTypes.string = 'TMT',
-//     images: PropTypes.array,
-//     description: PropTypes.string,
-//     id: PropTypes.number,
-//     publishDate: PropTypes.string,
-//     viewsCount: PropTypes.number,
-//     isEditable: PropTypes.bool,
-// };
+AdvItem.propTypes = {
+    price: PropTypes.number,
+    currency: PropTypes.string = 'TMT',
+    images: PropTypes.array,
+    description: PropTypes.string,
+    id: PropTypes.number,
+    publishDate: PropTypes.string,
+    viewsCount: PropTypes.number,
+    isEditable: PropTypes.bool,
+};
 
 export default AdvItem;

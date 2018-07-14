@@ -119,7 +119,8 @@ class AdvList extends React.Component {
                                         />
                                         <Route
                                             path={'/'}
-                                            render={() => (<AdvItem {...advItem} />)}
+                                            render={() => (
+                                                <AdvItem {...advItem} isEditable={true} />)}
                                         />
                                     </Switch>
                                 </AdvWrapper>
@@ -133,13 +134,13 @@ class AdvList extends React.Component {
     }
 }
 
-// AdvList.propTypes = {
-//     search: PropTypes.string,
-//     region: PropTypes.string,
-//     category: PropTypes.string,
-//     service: PropTypes.string,
-//     order: PropTypes.string,
-// };
+AdvList.propTypes = {
+    search: PropTypes.string,
+    region: PropTypes.string,
+    category: PropTypes.string,
+    service: PropTypes.string,
+    order: PropTypes.string,
+};
 
 export {
     AdvList

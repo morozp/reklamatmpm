@@ -40,7 +40,11 @@ class AdvService {
         }
 
         if(filter.orderType === orderTypes.newest){
-            sort['publishDate'] = 1;
+            sort['publishDate'] = -1;
+        }
+
+        if(filter.orderType === orderTypes.newest){
+            sort['createDate'] = -1;
         }
 
         if(filter.orderType === orderTypes.priceHighestToLowest){
